@@ -231,7 +231,7 @@ namespace TheLostBot.Modules
 
         #region IPVA
 
-        private static readonly DateTime ReferenceDate = new DateTime(2021, 12, 13);
+        private static readonly DateTime ReferenceDate = new DateTime(2022, 01, 20);
 
         [Command("ipva")]
         public async Task IpvaAsync()
