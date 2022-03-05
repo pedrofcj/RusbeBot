@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Data.Interfaces;
 using Data.Models;
+using Microsoft.Extensions.Configuration;
 using SQLite;
 
 namespace Data.Implementation.SQlite
 {
-    public class SqliteBaseService<T> where T : BaseModel, new()
+    public class SqliteBaseService<T>: IDbService<T> where T : BaseModel, new()
     {
-        private static readonly string DatabasePath = Path.Combine(Environment.CurrentDirectory, "TheLostBot.db");
-        protected SQLiteAsyncConnection Db = new SQLiteAsyncConnection(DatabasePath);
+        private readonly IConfigurationRoot _configurationRoot;
+        protected readonly SQLiteAsyncConnection Db;
 
-        public SqliteBaseService()
+        public SqliteBaseService(IConfigurationRoot configurationRoot)
         {
-            Db.CreateTableAsync(typeof(T)).GetAwaiter().GetResult();
+            _configurationRoot = configurationRoot;
+            var databasePath = _configurationRoot["sqlite-file"];
+            Db = new SQLiteAsyncConnection(databasePath);
+            Db.CreateTableAsync(typeof(T)).Wait();
         }
 
         public async Task<string> InsertAsync(T model)

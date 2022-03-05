@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Data.Interfaces;
 using Data.Models;
 
 namespace Data.Implementation.DynamoDb
 {
-    public class DynamoBaseService<T> where T : BaseModel
+    public class DynamoBaseService<T> : IDbService<T> where T : BaseModel
     {
         protected readonly AmazonDynamoDBClient Client;
 
