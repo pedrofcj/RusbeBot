@@ -12,12 +12,9 @@ namespace TheLostBot.Attributes
     {
         private List<ulong> AuthorizedRoles { get; }
 
-        public RequiredRoles(params TheLostRolesEnum[] roles)
+        public RequiredRoles(params ulong[] roles)
         {
-            AuthorizedRoles = new List<ulong>();
-
-            foreach (var role in roles)
-                AuthorizedRoles.Add((ulong)role);
+            AuthorizedRoles = new List<ulong>(roles);
         }
 
         public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)

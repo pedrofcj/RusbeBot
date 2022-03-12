@@ -11,7 +11,7 @@ using TheLostBot.Values.TheLost;
 
 namespace TheLostBot.Modules
 {
-    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado no Discord do The Lost")]
+    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
     public class ZoeiraModule : ModuleBase<SocketCommandContext>
     {
 
@@ -38,7 +38,6 @@ namespace TheLostBot.Modules
         }
 
         [Command("addpic")]
-        [RequiredRoles(TheLostRolesEnum.Member)]
         public async Task AddPicAsync(string category, string url)
         {
             var newPic = new TheLostPictures

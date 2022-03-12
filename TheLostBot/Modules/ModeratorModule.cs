@@ -5,19 +5,20 @@ using Discord.Commands;
 using Discord.WebSocket;
 using TheLostBot.Attributes;
 using TheLostBot.Extensions;
+using TheLostBot.Values.Pessoal;
 using TheLostBot.Values.TheLost;
 
 namespace TheLostBot.Modules
 {
     [Name("Moderator")]
-    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado no Discord do The Lost")]
+    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
     public class ModeratorModule : ModuleBase<SocketCommandContext>
     {
 
         #region Taxar
 
         [Command("taxar")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho, (ulong)PessoalRolesEnum.Delicias)]
         public async Task Taxar([Remainder] SocketGuildUser user)
         {
             TaxadosExtension.IdsTaxados.Add(user.Id);
@@ -26,7 +27,7 @@ namespace TheLostBot.Modules
         }
 
         [Command("liberar")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho, (ulong)PessoalRolesEnum.Delicias)]
         public async Task Liberar([Remainder] SocketGuildUser user)
         {
             TaxadosExtension.IdsTaxados.Remove(user.Id);
@@ -39,7 +40,7 @@ namespace TheLostBot.Modules
         #region Clear
 
         [Command("clear")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho, (ulong)PessoalRolesEnum.Delicias)]
         public async Task ClearAsync(int quantidade)
         {
             var messages = await Context.Channel.GetMessagesAsync(quantidade + 1).Flatten().ToListAsync();
@@ -60,7 +61,7 @@ namespace TheLostBot.Modules
         #region Disconnect
 
         [Command("dc")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho, (ulong)PessoalRolesEnum.Delicias)]
         public async Task DcAsync([Remainder] SocketGuildUser user)
         {
             await Context.Message.DeleteAsync();
@@ -72,7 +73,7 @@ namespace TheLostBot.Modules
         #region Mute/Unmute
 
         [Command("mute")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho, (ulong)PessoalRolesEnum.Delicias)]
         public async Task MuteAsync([Remainder] SocketGuildUser user)
         {
             await Context.Message.DeleteAsync();
@@ -80,7 +81,7 @@ namespace TheLostBot.Modules
         }
 
         [Command("unmute")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho, (ulong)PessoalRolesEnum.Delicias)]
         public async Task UnmuteAsync([Remainder] SocketGuildUser user)
         {
             await Context.Message.DeleteAsync();

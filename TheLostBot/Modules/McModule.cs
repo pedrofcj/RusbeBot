@@ -12,7 +12,7 @@ using TheLostBot.Values.TheLost;
 
 namespace TheLostBot.Modules
 {
-    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado no Discord do The Lost")]
+    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
     public class McModule : ModuleBase<SocketCommandContext>
     {
 
@@ -22,7 +22,7 @@ namespace TheLostBot.Modules
         #region Preços
 
         [Command("precos")]
-        [RequiredRoles(TheLostRolesEnum.Member)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Member)]
         [AllowedChannels(TheLostChannelsEnum.RhCotacaoArmas, TheLostChannelsEnum.ConversasPrivadoComandos)]
         public async Task PrecosAsync()
         {
@@ -130,7 +130,7 @@ namespace TheLostBot.Modules
         }
 
         [Command("addpreco")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho)]
         public async Task AddPrecoAsync([Remainder] string text)
         {
             while (text.Contains("  ")) text = text.Replace("  ", " ");
@@ -182,7 +182,7 @@ namespace TheLostBot.Modules
         }
 
         [Command("delpreco")]
-        [RequiredRoles(TheLostRolesEnum.Conselho)]
+        [RequiredRoles((ulong)TheLostRolesEnum.Conselho)]
         public async Task DelPrecoAsync([Remainder] string text)
         {
             var date = DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -270,8 +270,6 @@ namespace TheLostBot.Modules
         private readonly int _pesoRifle = 40;
 
         [Command("cargas")]
-        [RequiredRoles(TheLostRolesEnum.Member)]
-        [AllowedChannels(TheLostChannelsEnum.ConversasPrivadoChatPrivado, TheLostChannelsEnum.ConversasPrivadoComandos)]
         public async Task CargasAsync()
         {
             var response = new StringBuilder();
