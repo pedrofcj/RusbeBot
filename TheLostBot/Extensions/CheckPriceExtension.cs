@@ -13,7 +13,7 @@ namespace TheLostBot.Extensions
 
         public static async Task CheckPrice(this SocketUserMessage message, IPrecosService precosService)
         {
-            if (!(message.Channel is SocketGuildChannel { Id: 877332271764504636 } channel)) return;
+            if (message.Channel is not SocketGuildChannel { Id: 877332271764504636 } channel) return;
 
             var str = CleanString(message.Content);
             var parts = str.Split(' ');
@@ -27,6 +27,12 @@ namespace TheLostBot.Extensions
                 {
                     values.Add(value);
                 }
+            }
+
+            if (values.Count != 24)
+            {
+                await message.Channel.SendMessageAsync("Não foi possível extrair todos os valores, por favor tente enviar novamente.");
+                return;
             }
 
             var preco = new PrecosModel
@@ -49,6 +55,22 @@ namespace TheLostBot.Extensions
                 RifleP = values[9],
                 RifleM = values[10],
                 RifleG = values[11],
+
+                MunicaoPMarcado = values[12],
+                MunicaoMMarcado = values[13],
+                MunicaoGMarcado = values[14],
+
+                PistolaPMarcado = values[15],
+                PistolaMMarcado = values[16],
+                PistolaGMarcado = values[17],
+
+                SMGPMarcado = values[18],
+                SMGMMarcado = values[19],
+                SMGGMarcado = values[20],
+
+                RiflePMarcado = values[21],
+                RifleMMarcado = values[22],
+                RifleGMarcado = values[23],
             };
 
             var existente = await precosService.GetByDate(preco.Data);

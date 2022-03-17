@@ -44,63 +44,53 @@ namespace TheLostBot.Modules
             response.AppendLine($"Data: {precos.Data.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
 
             // Munição
-            response.AppendLine(media.MunicaoP > precos.MunicaoP
-                ? $"+ Munição P: {precos.MunicaoP:C} ({Convert.ToInt32(precos.MunicaoP - media.MunicaoP):C}) {CalculatePercentage(precos.MunicaoP, media.MunicaoP)}"
-                : $"- Munição P: {precos.MunicaoP:C} ({Convert.ToInt32(precos.MunicaoP - media.MunicaoP):C}) {CalculatePercentage(precos.MunicaoP, media.MunicaoP)}");
-
-            response.AppendLine(media.MunicaoM > precos.MunicaoM
-                ? $"+ Munição M: {precos.MunicaoM:C} ({Convert.ToInt32(precos.MunicaoM - media.MunicaoM):C}) {CalculatePercentage(precos.MunicaoM, media.MunicaoM)}"
-                : $"- Munição M: {precos.MunicaoM:C} ({Convert.ToInt32(precos.MunicaoM - media.MunicaoM):C}) {CalculatePercentage(precos.MunicaoM, media.MunicaoM)}");
-
-            response.AppendLine(media.MunicaoG > precos.MunicaoG
-                ? $"+ Munição G: {precos.MunicaoG:C} ({Convert.ToInt32(precos.MunicaoG - media.MunicaoG):C}) {CalculatePercentage(precos.MunicaoG, media.MunicaoG)}"
-                : $"- Munição G: {precos.MunicaoG:C} ({Convert.ToInt32(precos.MunicaoG - media.MunicaoG):C}) {CalculatePercentage(precos.MunicaoG, media.MunicaoG)}");
-
+            response.AppendLine(FormatValue("Munição P", precos.MunicaoP, media.MunicaoP));
+            response.AppendLine(FormatValue("Munição M", precos.MunicaoM, media.MunicaoM));
+            response.AppendLine(FormatValue("Munição G", precos.MunicaoG, media.MunicaoG));
             response.AppendLine();
 
             // Pistola
-            response.AppendLine(media.PistolaP > precos.PistolaP
-                ? $"+ Pistola P: {precos.PistolaP:C} ({Convert.ToInt32(precos.PistolaP - media.PistolaP):C}) {CalculatePercentage(precos.PistolaP, media.PistolaP)}"
-                : $"- Pistola P: {precos.PistolaP:C} ({Convert.ToInt32(precos.PistolaP - media.PistolaP):C}) {CalculatePercentage(precos.PistolaP, media.PistolaP)}");
-
-            response.AppendLine(media.PistolaM > precos.PistolaM
-                ? $"+ Pistola M: {precos.PistolaM:C} ({Convert.ToInt32(precos.PistolaM - media.PistolaM):C}) {CalculatePercentage(precos.PistolaM, media.PistolaM)}"
-                : $"- Pistola M: {precos.PistolaM:C} ({Convert.ToInt32(precos.PistolaM - media.PistolaM):C}) {CalculatePercentage(precos.PistolaM, media.PistolaM)}");
-
-            response.AppendLine(media.PistolaG > precos.PistolaG
-                ? $"+ Pistola G: {precos.PistolaG:C} ({Convert.ToInt32(precos.PistolaG - media.PistolaG):C}) {CalculatePercentage(precos.PistolaG, media.PistolaG)}"
-                : $"- Pistola G: {precos.PistolaG:C} ({Convert.ToInt32(precos.PistolaG - media.PistolaG):C}) {CalculatePercentage(precos.PistolaG, media.PistolaG)}");
-
+            response.AppendLine(FormatValue("Pistola P", precos.PistolaP, media.PistolaP));
+            response.AppendLine(FormatValue("Pistola M", precos.PistolaM, media.PistolaM));
+            response.AppendLine(FormatValue("Pistola G", precos.PistolaG, media.PistolaG));
             response.AppendLine();
 
             // SMG
-            response.AppendLine(media.SMGP > precos.SMGP
-                ? $"+ SMG P: {precos.SMGP:C} ({Convert.ToInt32(precos.SMGP - media.SMGP):C}) {CalculatePercentage(precos.SMGP, media.SMGP)}"
-                : $"- SMG P: {precos.SMGP:C} ({Convert.ToInt32(precos.SMGP - media.SMGP):C}) {CalculatePercentage(precos.SMGP, media.SMGP)}");
-
-            response.AppendLine(media.SMGM > precos.SMGM
-                ? $"+ SMG M: {precos.SMGM:C} ({Convert.ToInt32(precos.SMGM - media.SMGM):C}) {CalculatePercentage(precos.SMGM, media.SMGM)}"
-                : $"- SMG M: {precos.SMGM:C} ({Convert.ToInt32(precos.SMGM - media.SMGM):C}) {CalculatePercentage(precos.SMGM, media.SMGM)}");
-
-            response.AppendLine(media.SMGG > precos.SMGG
-                ? $"+ SMG G: {precos.SMGG:C} ({Convert.ToInt32(precos.SMGG - media.SMGG):C}) {CalculatePercentage(precos.SMGG, media.SMGG)}"
-                : $"- SMG G: {precos.SMGG:C} ({Convert.ToInt32(precos.SMGG - media.SMGG):C}) {CalculatePercentage(precos.SMGG, media.SMGG)}");
-
+            response.AppendLine(FormatValue("SMG P", precos.SMGP, media.SMGP));
+            response.AppendLine(FormatValue("SMG M", precos.SMGM, media.SMGM));
+            response.AppendLine(FormatValue("SMG G", precos.SMGG, media.SMGG));
             response.AppendLine();
 
             // Rifle
-            response.AppendLine(media.RifleP > precos.RifleP
-                ? $"+ Rifle P: {precos.RifleP:C} ({Convert.ToInt32(precos.RifleP - media.RifleP):C}) {CalculatePercentage(precos.RifleP, media.RifleP)}"
-                : $"- Rifle P: {precos.RifleP:C} ({Convert.ToInt32(precos.RifleP - media.RifleP):C}) {CalculatePercentage(precos.RifleP, media.RifleP)}");
+            response.AppendLine(FormatValue("Rifle P", precos.RifleP, media.RifleP));
+            response.AppendLine(FormatValue("Rifle M", precos.RifleM, media.RifleM));
+            response.AppendLine(FormatValue("Rifle G", precos.RifleG, media.RifleG));
+            response.AppendLine();
 
-            response.AppendLine(media.RifleM > precos.RifleM
-                ? $"+ Rifle M: {precos.RifleM:C} ({Convert.ToInt32(precos.RifleM - media.RifleM):C}) {CalculatePercentage(precos.RifleM, media.RifleM)}"
-                : $"- Rifle M: {precos.RifleM:C} ({Convert.ToInt32(precos.RifleM - media.RifleM):C}) {CalculatePercentage(precos.RifleM, media.RifleM)}");
+            response.AppendLine("DINHEIRO MARCADO");
 
-            response.AppendLine(media.RifleG > precos.RifleG
-                ? $"+ Rifle G: {precos.RifleG:C} ({Convert.ToInt32(precos.RifleG - media.RifleG):C}) {CalculatePercentage(precos.RifleG, media.RifleG)}"
-                : $"- Rifle G: {precos.RifleG:C} ({Convert.ToInt32(precos.RifleG - media.RifleG):C}) {CalculatePercentage(precos.RifleG, media.RifleG)}");
+            // Munição (dinheiro marcado)
+            response.AppendLine(FormatValue("Munição P", precos.MunicaoPMarcado, media.MunicaoPMarcado));
+            response.AppendLine(FormatValue("Munição M", precos.MunicaoMMarcado, media.MunicaoMMarcado));
+            response.AppendLine(FormatValue("Munição G", precos.MunicaoGMarcado, media.MunicaoGMarcado));
+            response.AppendLine();
 
+            // Pistola (dinheiro marcado)
+            response.AppendLine(FormatValue("Pistola P", precos.PistolaPMarcado, media.PistolaPMarcado));
+            response.AppendLine(FormatValue("Pistola M", precos.PistolaMMarcado, media.PistolaMMarcado));
+            response.AppendLine(FormatValue("Pistola G", precos.PistolaGMarcado, media.PistolaGMarcado));
+            response.AppendLine();
+
+            // SMG (dinheiro marcado)
+            response.AppendLine(FormatValue("SMG P", precos.SMGPMarcado, media.SMGPMarcado));
+            response.AppendLine(FormatValue("SMG M", precos.SMGMMarcado, media.SMGMMarcado));
+            response.AppendLine(FormatValue("SMG G", precos.SMGGMarcado, media.SMGGMarcado));
+            response.AppendLine();
+
+            // Rifle (dinheiro marcado)
+            response.AppendLine(FormatValue("Rifle P", precos.RiflePMarcado, media.RiflePMarcado));
+            response.AppendLine(FormatValue("Rifle M", precos.RifleMMarcado, media.RifleMMarcado));
+            response.AppendLine(FormatValue("Rifle G", precos.RifleGMarcado, media.RifleGMarcado));
 
             while (response.ToString().Contains("(("))
             {
@@ -115,6 +105,13 @@ namespace TheLostBot.Modules
             await ReplyAsync($"```diff" + Environment.NewLine +
                              $"{response}" + Environment.NewLine +
                              $"```");
+        }
+
+        private string FormatValue(string tipo, int preco, double media)
+        {
+            return media > preco
+                ? $"+ {tipo}: {preco:C} ({Convert.ToInt32(preco - media):C}) {CalculatePercentage(preco, media)}"
+                : $"- {tipo}: {preco:C} ({Convert.ToInt32(preco - media):C}) {CalculatePercentage(preco, media)}";
         }
 
         private string CalculatePercentage(int price, double avg)
@@ -206,21 +203,37 @@ namespace TheLostBot.Modules
         {
             var avg = new PrecoRelatorioModel
             {
-                MunicaoP = precos.Average(d => d.MunicaoP),
-                MunicaoM = precos.Average(d => d.MunicaoM),
-                MunicaoG = precos.Average(d => d.MunicaoG),
+                MunicaoP = precos.Where(d => d.MunicaoP > 0).Average(d => d.MunicaoP),
+                MunicaoM = precos.Where(d => d.MunicaoM > 0).Average(d => d.MunicaoM),
+                MunicaoG = precos.Where(d => d.MunicaoG > 0).Average(d => d.MunicaoG),
 
-                PistolaP = precos.Average(d => d.PistolaP),
-                PistolaM = precos.Average(d => d.PistolaM),
-                PistolaG = precos.Average(d => d.PistolaG),
+                PistolaP = precos.Where(d => d.PistolaP > 0).Average(d => d.PistolaP),
+                PistolaM = precos.Where(d => d.PistolaM > 0).Average(d => d.PistolaM),
+                PistolaG = precos.Where(d => d.PistolaG > 0).Average(d => d.PistolaG),
 
-                SMGP = precos.Average(d => d.SMGP),
-                SMGM = precos.Average(d => d.SMGM),
-                SMGG = precos.Average(d => d.SMGG),
+                SMGP = precos.Where(d => d.SMGP > 0).Average(d => d.SMGP),
+                SMGM = precos.Where(d => d.SMGM > 0).Average(d => d.SMGM),
+                SMGG = precos.Where(d => d.SMGG > 0).Average(d => d.SMGG),
 
-                RifleP = precos.Average(d => d.RifleP),
-                RifleM = precos.Average(d => d.RifleM),
-                RifleG = precos.Average(d => d.RifleG)
+                RifleP = precos.Where(d => d.RifleP > 0).Average(d => d.RifleP),
+                RifleM = precos.Where(d => d.RifleM > 0).Average(d => d.RifleM),
+                RifleG = precos.Where(d => d.RifleG > 0).Average(d => d.RifleG),
+
+                MunicaoPMarcado = precos.Where(d => d.MunicaoPMarcado > 0).Average(d => d.MunicaoPMarcado),
+                MunicaoMMarcado = precos.Where(d => d.MunicaoMMarcado > 0).Average(d => d.MunicaoMMarcado),
+                MunicaoGMarcado = precos.Where(d => d.MunicaoGMarcado > 0).Average(d => d.MunicaoGMarcado),
+
+                PistolaPMarcado = precos.Where(d => d.PistolaPMarcado > 0).Average(d => d.PistolaPMarcado),
+                PistolaMMarcado = precos.Where(d => d.PistolaMMarcado > 0).Average(d => d.PistolaMMarcado),
+                PistolaGMarcado = precos.Where(d => d.PistolaGMarcado > 0).Average(d => d.PistolaGMarcado),
+
+                SMGPMarcado = precos.Where(d => d.SMGPMarcado > 0).Average(d => d.SMGPMarcado),
+                SMGMMarcado = precos.Where(d => d.SMGMMarcado > 0).Average(d => d.SMGMMarcado),
+                SMGGMarcado = precos.Where(d => d.SMGGMarcado > 0).Average(d => d.SMGGMarcado),
+
+                RiflePMarcado = precos.Where(d => d.RiflePMarcado > 0).Average(d => d.RiflePMarcado),
+                RifleMMarcado = precos.Where(d => d.RifleMMarcado > 0).Average(d => d.RifleMMarcado),
+                RifleGMarcado = precos.Where(d => d.RifleGMarcado > 0).Average(d => d.RifleGMarcado)
 
             };
 
