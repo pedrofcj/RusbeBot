@@ -22,13 +22,15 @@ namespace TheLostBot.Modules
         #region Preços
 
         [Command("precos")]
-        [RequiredRoles((ulong)TheLostRolesEnum.Member)]
-        [AllowedChannels(TheLostChannelsEnum.RhCotacaoArmas, TheLostChannelsEnum.ConversasPrivadoComandos)]
+        [RequiredRoles(true)]
+        [AllowedChannels(true)]
         public async Task PrecosAsync()
         {
 
             var allPrecos = await _precosService.GetAllAsync();
-            var precosList = allPrecos.Where(d => d.GuildId == Context.Guild.Id.ToString()).ToList();
+            //var precosList = allPrecos.Where(d => d.GuildId == Context.Guild.Id.ToString()).ToList();
+            var precosList = allPrecos.ToList();
+
             var precos = precosList.OrderByDescending(d => d.Data).FirstOrDefault();
 
             if (precos == null)
@@ -127,7 +129,7 @@ namespace TheLostBot.Modules
         }
 
         [Command("addpreco")]
-        [RequiredRoles((ulong)TheLostRolesEnum.Conselho)]
+        [RequiredRoles(true)]
         public async Task AddPrecoAsync([Remainder] string text)
         {
             while (text.Contains("  ")) text = text.Replace("  ", " ");
@@ -179,7 +181,7 @@ namespace TheLostBot.Modules
         }
 
         [Command("delpreco")]
-        [RequiredRoles((ulong)TheLostRolesEnum.Conselho)]
+        [RequiredRoles(true)]
         public async Task DelPrecoAsync([Remainder] string text)
         {
             var date = DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -247,6 +249,7 @@ namespace TheLostBot.Modules
         private static readonly DateTime ReferenceDate = new DateTime(2022, 03, 07);
 
         [Command("ipva")]
+        [RequiredRoles(false)]
         public async Task IpvaAsync()
         {
 
@@ -283,6 +286,7 @@ namespace TheLostBot.Modules
         private readonly int _pesoRifle = 40;
 
         [Command("cargas")]
+        [RequiredRoles(false)]
         public async Task CargasAsync()
         {
             var response = new StringBuilder();

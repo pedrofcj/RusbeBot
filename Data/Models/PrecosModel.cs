@@ -4,6 +4,7 @@ using Amazon.DynamoDBv2.DataModel;
 namespace Data.Models
 {
     [DynamoDBTable("Precos")]
+    [SQLite.Table("Precos")]
     public class PrecosModel : BaseModel
     {
         [DynamoDBProperty] public DateTime Data { get; set; }

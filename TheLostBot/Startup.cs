@@ -71,6 +71,8 @@ namespace TheLostBot
             .AddSingleton<LoggingService>()         // Add loggingservice to the collection
             .AddSingleton<ITheLostPicturesService, SqliteTheLostPicturesService>() // Add Picture service to collection
             .AddSingleton<IPrecosService, SqlitePrecosService>() // Add Picture service to collection
+            .AddSingleton<IAllowedRolesConfigService, SqliteAllowedConfigService>() // Add roles config service to collection
+            .AddSingleton<IAllowedChannelsConfigService, SqliteAllowedChannelsConfigService>() // Add channels config service to collection
             .AddSingleton<Random>()                 // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
         }

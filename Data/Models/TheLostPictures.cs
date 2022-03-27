@@ -3,7 +3,8 @@
 namespace Data.Models
 {
 
-    [DynamoDBTable("TheLostPics")]
+    [DynamoDBTable("Pics")]
+    [SQLite.Table("Pics")]
     public class TheLostPictures : BaseModel
     {
         [DynamoDBProperty] public string Category { get; set; }

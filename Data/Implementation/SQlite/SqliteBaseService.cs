@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data.Interfaces;
 using Data.Models;
@@ -11,13 +9,11 @@ namespace Data.Implementation.SQlite
 {
     public class SqliteBaseService<T>: IDbService<T> where T : BaseModel, new()
     {
-        private readonly IConfigurationRoot _configurationRoot;
         protected readonly SQLiteAsyncConnection Db;
 
         public SqliteBaseService(IConfigurationRoot configurationRoot)
         {
-            _configurationRoot = configurationRoot;
-            var databasePath = _configurationRoot["sqlite-file"];
+            var databasePath = configurationRoot["sqlite-file"];
             Db = new SQLiteAsyncConnection(databasePath);
             Db.CreateTableAsync(typeof(T)).Wait();
         }
