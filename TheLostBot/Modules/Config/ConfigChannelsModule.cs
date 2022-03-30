@@ -10,6 +10,8 @@ using TheLostBot.Attributes;
 
 namespace TheLostBot.Modules.Config;
 
+[CommandValidation(false, true)]
+[RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
 public class ConfigChannelsModule : ConfigModule
 {
     public ConfigChannelsModule(IAllowedChannelsConfigService allowedChannelsConfigService, IAllowedRolesConfigService allowedRolesConfigService) : base(allowedChannelsConfigService, allowedRolesConfigService)
@@ -17,7 +19,7 @@ public class ConfigChannelsModule : ConfigModule
     }
 
     [Command("channel add")]
-    [RequiredRoles(true)]
+
     public async Task AddConfigChannelAsync([Remainder] string input)
     {
         try
@@ -42,7 +44,6 @@ public class ConfigChannelsModule : ConfigModule
     }
 
     [Command("channel remove")]
-    [RequiredRoles(true)]
     public async Task RemoveConfigChannelAsync([Remainder] string input)
     {
         try
@@ -69,7 +70,6 @@ public class ConfigChannelsModule : ConfigModule
     }
 
     [Command("channel list")]
-    [RequiredRoles(true)]
     public async Task ListConfigChannelAsync([Remainder] string input)
     {
         try
@@ -95,4 +95,5 @@ public class ConfigChannelsModule : ConfigModule
             throw;
         }
     }
+
 }

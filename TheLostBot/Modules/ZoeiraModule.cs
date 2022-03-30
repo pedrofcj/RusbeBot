@@ -7,11 +7,11 @@ using Data.Models;
 using Discord.Commands;
 using Discord.WebSocket;
 using TheLostBot.Attributes;
-using TheLostBot.Values.TheLost;
 
 namespace TheLostBot.Modules
 {
     [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
+    [CommandValidation(false, false)]
     public class ZoeiraModule : ModuleBase<SocketCommandContext>
     {
 

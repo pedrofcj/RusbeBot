@@ -2,9 +2,13 @@
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using TheLostBot.Attributes;
 
 namespace TheLostBot.Modules
 {
+    [CommandValidation(false, true)]
+    [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
+
     public class BasicModule : ModuleBase<SocketCommandContext>
     {
         [Command("say")]

@@ -12,7 +12,9 @@ using TheLostBot.Values.TheLost;
 
 namespace TheLostBot.Modules
 {
+    [CommandValidation(true, true)]
     [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
+
     public class McModule : ModuleBase<SocketCommandContext>
     {
 
@@ -22,8 +24,6 @@ namespace TheLostBot.Modules
         #region Preços
 
         [Command("precos")]
-        [RequiredRoles(true)]
-        [AllowedChannels(true)]
         public async Task PrecosAsync()
         {
 
@@ -129,7 +129,6 @@ namespace TheLostBot.Modules
         }
 
         [Command("addpreco")]
-        [RequiredRoles(true)]
         public async Task AddPrecoAsync([Remainder] string text)
         {
             while (text.Contains("  ")) text = text.Replace("  ", " ");
@@ -181,7 +180,6 @@ namespace TheLostBot.Modules
         }
 
         [Command("delpreco")]
-        [RequiredRoles(true)]
         public async Task DelPrecoAsync([Remainder] string text)
         {
             var date = DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
@@ -244,31 +242,6 @@ namespace TheLostBot.Modules
 
         #endregion
 
-        #region IPVA
-
-        private static readonly DateTime ReferenceDate = new DateTime(2022, 03, 07);
-
-        [Command("ipva")]
-        [RequiredRoles(false)]
-        public async Task IpvaAsync()
-        {
-
-            var proximoIpva = ReferenceDate;
-            var hoje = DateTime.ParseExact(DateTime.UtcNow.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            while (proximoIpva <= hoje)
-            {
-                proximoIpva = proximoIpva.AddDays(12);
-                if (proximoIpva == hoje)
-                {
-                    await ReplyAsync("Hoje é dia de pagar IPVA!");
-                }
-            }
-
-            await ReplyAsync($"Próximo IPVA será dia {proximoIpva.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
-        }
-
-        #endregion
-
         #region Cargas
 
         private readonly int _cargaPMin = 15;
@@ -286,7 +259,6 @@ namespace TheLostBot.Modules
         private readonly int _pesoRifle = 40;
 
         [Command("cargas")]
-        [RequiredRoles(false)]
         public async Task CargasAsync()
         {
             var response = new StringBuilder();
