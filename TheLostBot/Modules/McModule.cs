@@ -28,8 +28,7 @@ namespace TheLostBot.Modules
         {
 
             var allPrecos = await _precosService.GetAllAsync();
-            //var precosList = allPrecos.Where(d => d.GuildId == Context.Guild.Id.ToString()).ToList();
-            var precosList = allPrecos.ToList();
+            var precosList = allPrecos.Where(d => d.GuildId == Context.Guild.Id.ToString()).ToList();
 
             var precos = precosList.OrderByDescending(d => d.Data).FirstOrDefault();
 
