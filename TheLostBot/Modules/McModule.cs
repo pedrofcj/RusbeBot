@@ -163,7 +163,7 @@ namespace TheLostBot.Modules
                 RifleG = Convert.ToInt32(args[12])
             };
 
-            var existente = await _precosService.GetByDate(newPreco.Data);
+            var existente = await _precosService.GetByDate(newPreco.Data, Context.Guild.Id.ToString());
 
             if (existente != null)
             {
@@ -183,7 +183,7 @@ namespace TheLostBot.Modules
         {
             var date = DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-            var existente = await _precosService.GetByDate(date);
+            var existente = await _precosService.GetByDate(date, Context.Guild.Id.ToString());
 
             if (existente == null)
             {

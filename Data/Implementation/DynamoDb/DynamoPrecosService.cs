@@ -8,11 +8,11 @@ namespace Data.Implementation.DynamoDb
 {
     public class DynamoPrecosService : DynamoBaseService<PrecosModel>, IPrecosService
     {
-        public async Task<PrecosModel> GetByDate(DateTime date)
+        public async Task<PrecosModel> GetByDate(DateTime date, string guildId)
         {
             var records = await GetAllAsync();
-            
-            return records.FirstOrDefault(d=>d.Data == date);
+
+            return records.FirstOrDefault(d => d.Data == date && d.GuildId == guildId);
         }
     }
 }

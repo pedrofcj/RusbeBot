@@ -12,9 +12,9 @@ namespace Data.Implementation.SQlite
         {
         }
 
-        public async Task<PrecosModel> GetByDate(DateTime date)
+        public async Task<PrecosModel> GetByDate(DateTime date, string guildId)
         {
-            var result = await Db.FindAsync<PrecosModel>((model => model.Data == date));
+            var result = await Db.FindAsync<PrecosModel>(model => model.Data == date && model.GuildId == guildId);
             return result;
         }
     }

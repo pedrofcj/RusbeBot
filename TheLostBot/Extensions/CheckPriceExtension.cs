@@ -13,7 +13,7 @@ namespace TheLostBot.Extensions
 
         public static async Task CheckPrice(this SocketUserMessage message, IPrecosService precosService)
         {
-            if (message.Channel is not SocketGuildChannel { Id: 877332271764504636 } channel) return;
+            if (message.Channel is not SocketGuildChannel {Id: (877332271764504636 or 934125922284634232 or 914914042966069258)} channel) return;
 
             var str = CleanString(message.Content);
             var parts = str.Split(' ');
@@ -73,7 +73,7 @@ namespace TheLostBot.Extensions
                 RifleGMarcado = values[23],
             };
 
-            var existente = await precosService.GetByDate(preco.Data);
+            var existente = await precosService.GetByDate(preco.Data, channel.Guild.Id.ToString());
             if (existente != null)
             {
                 await message.Channel.SendMessageAsync("Já existe um preço para esta data.");
