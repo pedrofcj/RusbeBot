@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Sentry;
+using TheLostBot.Extensions;
 
 namespace TheLostBot.Services
 {
@@ -33,6 +35,8 @@ namespace TheLostBot.Services
             try
             {
                 File.AppendAllText(LogFile, logText + "\n");     // Write the log text to a file
+                if (msg.Source.ToLowerInvariant().Equals("Command".ToLowerInvariant()))
+                    SentrySdk.CaptureMessage(logText, msg.Severity.ToSentryLevel());
             }
             catch (Exception e)
             {

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Data.Interfaces;
 using Discord;
 using Discord.Commands;
+using Sentry;
 
 namespace TheLostBot.Attributes;
 
@@ -38,7 +41,31 @@ public class CommandValidation : PreconditionAttribute
         if (chanelPreconditionResult.IsSuccess && rolePreconditionResult.IsSuccess)
             return PreconditionResult.FromSuccess();
 
-        return PreconditionResult.FromError(chanelPreconditionResult.ErrorReason + rolePreconditionResult.ErrorReason);
+        var errorMessage = new StringBuilder();
+
+        if (!string.IsNullOrWhiteSpace(chanelPreconditionResult.ErrorReason))
+            errorMessage.AppendLine(chanelPreconditionResult.ErrorReason);
+        if (!string.IsNullOrWhiteSpace(rolePreconditionResult.ErrorReason))
+            errorMessage.AppendLine(rolePreconditionResult.ErrorReason);
+
+        await context.Channel.SendMessageAsync(errorMessage.ToString());
+
+        SentrySdk.CaptureMessage($"Erro ao executar o comando '!{command.Name}'. {Environment.NewLine}" +
+                                 $"Requisitado por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name}. {Environment.NewLine}" +
+                                 $"Mensagem de erro: {errorMessage} {Environment.NewLine}" +
+                                 $"Raw message: {context.Message.Content}",
+            scope =>
+            {
+                scope.SetTags(new List<KeyValuePair<string, string>>
+                {
+                    new("Tipo", "CommandValidation"),
+                    new("Comando", command.Name)
+                });
+
+            }, SentryLevel.Warning);
+        
+        
+        return PreconditionResult.FromError(errorMessage.ToString());
     }
 
     private async Task<PreconditionResult> ValidateChannelAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
@@ -62,7 +89,7 @@ public class CommandValidation : PreconditionAttribute
         var authorizedChannels = commandConfigs.Select(model => Convert.ToUInt64(model.ChannelId)).ToList();
 
         // retorna o resultado
-        return authorizedChannels.Any(d => d == channelId) ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Este comando não pode ser utilizado nesta sala.");
+        return authorizedChannels.Any(d => d == channelId) ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Este comando não pode ser utilizado nesta sala. Entre em contato com o dono do servidor para reportar este erro.");
     }
 
     private async Task<PreconditionResult> ValidateRoleAsync(ICommandContext context, CommandInfo command, IServiceProvider services, IGuildUser user)
@@ -86,7 +113,7 @@ public class CommandValidation : PreconditionAttribute
         var authorizedRoles = commandConfigs.Select(model => Convert.ToUInt64(model.RoleId)).ToList();
 
         // retorna o resultado
-        return authorizedRoles.Intersect(userRoles).Any() ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Você não tem permissão para executar esse comando.");
+        return authorizedRoles.Intersect(userRoles).Any() ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Você não tem permissão para executar esse comando. Entre em contato com o dono do servidor para reportar este erro.");
     }
     
 }

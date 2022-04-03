@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data.Interfaces;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
+using Sentry;
 using TheLostBot.Extensions;
 
 
@@ -22,7 +24,7 @@ namespace TheLostBot.Services
             DiscordSocketClient discord,
             CommandService commands,
             IConfigurationRoot config,
-            IServiceProvider provider, 
+            IServiceProvider provider,
             IPrecosService precosService)
         {
             _discord = discord;
@@ -36,7 +38,7 @@ namespace TheLostBot.Services
 
         private async Task OnMessageReceivedAsync(SocketMessage s)
         {
-            if (!(s is SocketUserMessage msg)) return;
+            if (s is not SocketUserMessage msg) return;
             if (msg.Author.Id == _discord.CurrentUser.Id) return;     // Ignore self when checking commands
 
             await msg.VerificarTaxado();
@@ -49,8 +51,23 @@ namespace TheLostBot.Services
             {
                 var result = await _commands.ExecuteAsync(context, argPos, _provider);     // Execute the command
 
-                if (!result.IsSuccess)     // If not successful, reply with the error.
-                    await context.Channel.SendMessageAsync(result.ToString());
+                if (result.IsSuccess)
+                {
+                    SentrySdk.CaptureMessage($"Comando executado. {Environment.NewLine}" +
+                                             $"Raw message: {context.Message.Content}",
+                        scope =>
+                        {
+                            scope.SetTags(new List<KeyValuePair<string, string>>
+                            {
+                                new("Tipo", "Comando executado")
+                            });
+                        });
+                    return;
+                }
+
+                await context.Channel.SendMessageAsync(result.ToString());
+                SentrySdk.CaptureMessage($"Erro ao tentar executar o comando da mensagem {msg.Content}", SentryLevel.Error);
+
             }
         }
     }

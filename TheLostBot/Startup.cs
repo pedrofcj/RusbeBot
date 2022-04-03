@@ -8,6 +8,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sentry;
 using TheLostBot.Services;
 
 namespace TheLostBot
@@ -42,6 +43,18 @@ namespace TheLostBot
         public async Task RunAsync()
         {
             AwsCredentials.SetCredentials(Configuration["aws:accessKeyId"], Configuration["aws:secretAccessKey"]);
+
+            var sentryToken = Configuration["tokens:sentry"];
+
+            if (!string.IsNullOrWhiteSpace(sentryToken))
+            {
+                SentrySdk.Init(options =>
+                {
+                    options.Dsn = sentryToken;
+                    options.Debug = true;
+                    options.TracesSampleRate = 1.0;
+                });
+            }
 
             var services = new ServiceCollection();             // Create a new instance of a service collection
             ConfigureServices(services);
