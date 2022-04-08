@@ -8,6 +8,7 @@ using Data.Interfaces;
 using Data.Models;
 using Discord.Commands;
 using TheLostBot.Attributes;
+using TheLostBot.Helpers;
 using TheLostBot.Values.TheLost;
 
 namespace TheLostBot.Modules
@@ -26,7 +27,6 @@ namespace TheLostBot.Modules
         [Command("precos")]
         public async Task PrecosAsync()
         {
-
             var allPrecos = await _precosService.GetAllAsync();
             var precosList = allPrecos.Where(d => d.GuildId == Context.Guild.Id.ToString()).ToList();
 
@@ -34,7 +34,9 @@ namespace TheLostBot.Modules
 
             if (precos == null)
             {
-                await ReplyAsync("Ocorreu um erro ao buscar os preços");
+                const string errorMessage = "Ocorreu um erro ao buscar os preços";
+                SentryHelper.Log($"{errorMessage}{Environment.NewLine}Objeto de preços era null.", Context);
+                await ReplyAsync(errorMessage);
                 return;
             }
 

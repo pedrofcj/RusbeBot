@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Data.Interfaces;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Sentry;
 using TheLostBot.Extensions;
+using TheLostBot.Helpers;
 
 
 namespace TheLostBot.Services
@@ -34,8 +38,34 @@ namespace TheLostBot.Services
             _precosService = precosService;
 
             _discord.MessageReceived += OnMessageReceivedAsync;
+            _discord.JoinedGuild += DiscordOnJoinedGuild;
+            _discord.LeftGuild += DiscordOnLeftGuild;
         }
 
+        private static Task DiscordOnJoinedGuild(SocketGuild arg)
+        {
+            SentrySdk.CaptureMessage($"Entrou no server {arg.Name} ({arg.Id})", scope =>
+            {
+                scope.SetTags(new List<KeyValuePair<string, string>>
+                {
+                    new("Tipo", "Entrou")
+                });
+            });
+            return Task.CompletedTask;
+        }
+
+        private static Task DiscordOnLeftGuild(SocketGuild arg)
+        {
+            SentrySdk.CaptureMessage($"Saiu no server {arg.Name} ({arg.Id})", scope =>
+            {
+                scope.SetTags(new List<KeyValuePair<string, string>>
+                {
+                    new("Tipo", "Saiu")
+                });
+            });
+            return Task.CompletedTask;
+        }
+        
         private async Task OnMessageReceivedAsync(SocketMessage s)
         {
             if (s is not SocketUserMessage msg) return;
@@ -53,21 +83,29 @@ namespace TheLostBot.Services
 
                 if (result.IsSuccess)
                 {
-                    SentrySdk.CaptureMessage($"Comando executado. {Environment.NewLine}" +
-                                             $"Raw message: {context.Message.Content}",
+                    var logTags = new List<KeyValuePair<string, string>>
+                    {
+                        new("Tipo", "Comando"),
+                        new("Guild Name", context.Guild.Name),
+                        new("Guild Id", context.Guild.Id.ToString()),
+                        new("Channel Name", context.Channel.Name),
+                        new("Channel Id", context.Channel.Id.ToString()),
+                        new("User", $"{context.User.Username}#{context.User.Discriminator}"),
+                        new("User Id", context.User.Id.ToString()),
+                    };
+
+                    SentrySdk.CaptureMessage($"Comando executado: {context.Message.Content} {Environment.NewLine}" +
+                                             $"Mensagem: '{context.Message.Content}' por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name} ({context.Guild.Id}/{context.Channel.Id})",
+
                         scope =>
                         {
-                            scope.SetTags(new List<KeyValuePair<string, string>>
-                            {
-                                new("Tipo", "Comando executado")
-                            });
+                            scope.SetTags(logTags);
                         });
                     return;
                 }
 
                 await context.Channel.SendMessageAsync(result.ToString());
-                SentrySdk.CaptureMessage($"Erro ao tentar executar o comando da mensagem {msg.Content}", SentryLevel.Error);
-
+                SentryHelper.Log($"Erro ao tentar executar o comando da mensagem '{msg.Content}'", context, SentryLevel.Error);
             }
         }
     }

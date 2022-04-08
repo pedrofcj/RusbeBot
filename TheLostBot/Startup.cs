@@ -53,6 +53,7 @@ namespace TheLostBot
                     options.Dsn = sentryToken;
                     options.Debug = true;
                     options.TracesSampleRate = 1.0;
+                    options.AttachStacktrace = true;
                 });
             }
 
@@ -70,9 +71,12 @@ namespace TheLostBot
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
-            {                                       // Add discord to the collection
-                LogLevel = LogSeverity.Verbose,     // Tell the logger to give Verbose amount of info
-                MessageCacheSize = 1000,            // Cache 1,000 messages per channel
+            {                                           // Add discord to the collection
+                LogLevel = LogSeverity.Verbose,         // Tell the logger to give Verbose amount of info
+                MessageCacheSize = 1000,                // Cache 1,000 messages per channel
+                AlwaysDownloadUsers = true,             // Download users to cache
+                GatewayIntents = GatewayIntents.All,    // Set all the intents available (a bit overkill, but the bot is growing fast)
+
             }))
             .AddSingleton(new CommandService(new CommandServiceConfig
             {                                       // Add the command service to the collection
@@ -88,6 +92,7 @@ namespace TheLostBot
             .AddSingleton<IAllowedChannelsConfigService, SqliteAllowedChannelsConfigService>() // Add channels config service to collection
             .AddSingleton<Random>()                 // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
+            
         }
     }
 }

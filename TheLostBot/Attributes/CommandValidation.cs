@@ -7,6 +7,7 @@ using Data.Interfaces;
 using Discord;
 using Discord.Commands;
 using Sentry;
+using TheLostBot.Helpers;
 
 namespace TheLostBot.Attributes;
 
@@ -50,21 +51,17 @@ public class CommandValidation : PreconditionAttribute
 
         await context.Channel.SendMessageAsync(errorMessage.ToString());
 
-        SentrySdk.CaptureMessage($"Erro ao executar o comando '!{command.Name}'. {Environment.NewLine}" +
-                                 $"Requisitado por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name}. {Environment.NewLine}" +
-                                 $"Mensagem de erro: {errorMessage} {Environment.NewLine}" +
-                                 $"Raw message: {context.Message.Content}",
-            scope =>
-            {
-                scope.SetTags(new List<KeyValuePair<string, string>>
-                {
-                    new("Tipo", "CommandValidation"),
-                    new("Comando", command.Name)
-                });
+        var logMessage = $"Erro ao executar o comando '!{command.Name}'. {Environment.NewLine}" +
+                           $"Requisitado por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name} ({context.Guild.Id}/{context.Channel.Id}) {Environment.NewLine}" +
+                           $"Mensagem de erro: {errorMessage} {Environment.NewLine}" +
+                           $"Raw message: {context.Message.Content}";
 
-            }, SentryLevel.Warning);
-        
-        
+        SentryHelper.Log(logMessage, context, SentryLevel.Warning, new List<KeyValuePair<string, string>>
+        {
+            new("Tipo", "CommandValidation"),
+            new("Comando", command.Name)
+        });
+
         return PreconditionResult.FromError(errorMessage.ToString());
     }
 
@@ -115,5 +112,5 @@ public class CommandValidation : PreconditionAttribute
         // retorna o resultado
         return authorizedRoles.Intersect(userRoles).Any() ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Você não tem permissão para executar esse comando. Entre em contato com o dono do servidor para reportar este erro.");
     }
-    
+
 }
