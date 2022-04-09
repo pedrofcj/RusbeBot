@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-namespace TheLostBot
+namespace TheLostBot;
+
+internal class Program
 {
-    internal class Program
-    {
-        public static Task Main(string[] args)
-            => Startup.RunAsync(args);
-    }
+    public static Task Main(string[] args)
+        => Startup.RunAsync(args);
 }

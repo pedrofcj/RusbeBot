@@ -2,12 +2,11 @@
 using Data.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace Data.Implementation.SQlite
+namespace Data.Implementation.SQlite;
+
+public class SqliteTheLostPicturesService : SqliteBaseService<TheLostPictures>, ITheLostPicturesService
 {
-    public class SqliteTheLostPicturesService : SqliteBaseService<TheLostPictures>, ITheLostPicturesService
+    public SqliteTheLostPicturesService(IConfigurationRoot configurationRoot) : base(configurationRoot)
     {
-        public SqliteTheLostPicturesService(IConfigurationRoot configurationRoot) : base(configurationRoot)
-        {
-        }
     }
 }

@@ -4,15 +4,14 @@ using System.Threading.Tasks;
 using Data.Interfaces;
 using Data.Models;
 
-namespace Data.Implementation.DynamoDb
-{
-    public class DynamoPrecosService : DynamoBaseService<PrecosModel>, IPrecosService
-    {
-        public async Task<PrecosModel> GetByDate(DateTime date, string guildId)
-        {
-            var records = await GetAllAsync();
+namespace Data.Implementation.DynamoDb;
 
-            return records.FirstOrDefault(d => d.Data == date && d.GuildId == guildId);
-        }
+public class DynamoPrecosService : DynamoBaseService<PrecosModel>, IPrecosService
+{
+    public async Task<PrecosModel> GetByDate(DateTime date, string guildId)
+    {
+        var records = await GetAllAsync();
+
+        return records.FirstOrDefault(d => d.Data == date && d.GuildId == guildId);
     }
 }

@@ -1,9 +1,8 @@
 ﻿using Data.Models;
 
-namespace Data.Interfaces
+namespace Data.Interfaces;
+
+public interface ITheLostPicturesService : IDbService<TheLostPictures>
 {
-    public interface ITheLostPicturesService : IDbService<TheLostPictures>
-    {
         
-    }
 }

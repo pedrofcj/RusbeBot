@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Data.Models;
 
-namespace Data.Interfaces
+namespace Data.Interfaces;
+
+public interface IAllowedRolesConfigService : IDbService<AllowedRolesConfigModel>
 {
-    public interface IAllowedRolesConfigService : IDbService<AllowedRolesConfigModel>
-    {
-        Task<List<AllowedRolesConfigModel>> GetAllowedRolesByCommandAndGuild(string command, string guildId);
-    }
+    Task<List<AllowedRolesConfigModel>> GetAllowedRolesByCommandAndGuild(string command, string guildId);
 }

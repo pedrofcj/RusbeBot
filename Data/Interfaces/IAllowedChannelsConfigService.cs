@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Data.Models;
 
-namespace Data.Interfaces
+namespace Data.Interfaces;
+
+public interface IAllowedChannelsConfigService : IDbService<AllowedChannelsConfigModel>
 {
-    public interface IAllowedChannelsConfigService : IDbService<AllowedChannelsConfigModel>
-    {
-        Task<List<AllowedChannelsConfigModel>> GetAllowedChannelsByCommandAndGuild(string command, string guildId);
-    }
+    Task<List<AllowedChannelsConfigModel>> GetAllowedChannelsByCommandAndGuild(string command, string guildId);
 }

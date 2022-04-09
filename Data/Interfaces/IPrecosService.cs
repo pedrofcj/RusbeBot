@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Data.Models;
 
-namespace Data.Interfaces
+namespace Data.Interfaces;
+
+public interface IPrecosService : IDbService<PrecosModel>
 {
-    public interface IPrecosService : IDbService<PrecosModel>
-    {
-        Task<PrecosModel> GetByDate(DateTime date, string guildId);
-    }
+    Task<PrecosModel> GetByDate(DateTime date, string guildId);
 }

@@ -2,17 +2,16 @@
 using Amazon.DynamoDBv2.DataModel;
 using SQLite;
 
-namespace Data.Models
+namespace Data.Models;
+
+public class BaseModel
 {
-    public class BaseModel
-    {
-        [DynamoDBHashKey] 
-        [PrimaryKey]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+    [DynamoDBHashKey] 
+    [PrimaryKey]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
         
-        [DynamoDBProperty] 
-        public string GuildId { get; set; }
+    [DynamoDBProperty] 
+    public string GuildId { get; set; }
 
 
-    }
 }
