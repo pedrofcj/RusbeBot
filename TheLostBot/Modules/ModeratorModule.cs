@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
@@ -17,17 +18,18 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
     #region Taxar
 
     [Command("taxar")]
-    public async Task Taxar([Remainder] SocketGuildUser user)
+    public async Task TaxarAsync(SocketGuildUser user)
     {
-        TaxadosExtension.IdsTaxados.Add(user.Id);
+        
+        TaxadosExtension.Add(Context.Guild.Id, user.Id);
         await ReplyAsync($"Você está sendo taxado {user.Mention}");
         await Context.Message.DeleteAsync();
     }
 
     [Command("liberar")]
-    public async Task Liberar([Remainder] SocketGuildUser user)
+    public async Task LiberarAsync(SocketGuildUser user)
     {
-        TaxadosExtension.IdsTaxados.Remove(user.Id);
+        TaxadosExtension.Remove(Context.Guild.Id, user.Id);
         await ReplyAsync($"Você ta liberado {user.Mention}");
         await Context.Message.DeleteAsync();
     }
@@ -79,6 +81,43 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
     {
         await Context.Message.DeleteAsync();
         await user.ModifyAsync(properties => properties.Mute = false);
+    }
+
+    #endregion
+
+    #region Timeout
+
+    [Command("to-s")]
+    public async Task TimeoutSegundosAsync(SocketGuildUser user, int segundos)
+    {
+        await TimeoutAsync(user, TimeSpan.FromSeconds(segundos));
+        await Context.Message.DeleteAsync();
+    }
+
+    [Command("to-m")]
+    public async Task TimeoutMinutosAsync(SocketGuildUser user, int minutos)
+    {
+        await TimeoutAsync(user, TimeSpan.FromMinutes(minutos));
+        await Context.Message.DeleteAsync();
+    }
+
+    [Command("to-h")]
+    public async Task TimeoutHorasAsync(SocketGuildUser user, int horas)
+    {
+        await TimeoutAsync(user, TimeSpan.FromHours(horas));
+        await Context.Message.DeleteAsync();
+    }
+
+    [Command("to-d")]
+    public async Task TimeoutDiasAsync(SocketGuildUser user, int dias)
+    {
+        await TimeoutAsync(user, TimeSpan.FromDays(dias));
+        await Context.Message.DeleteAsync();
+    }
+
+    private async Task TimeoutAsync(SocketGuildUser user, TimeSpan tempo)
+    {
+        await user.SetTimeOutAsync(tempo);
     }
 
     #endregion

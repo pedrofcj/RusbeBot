@@ -1,18 +1,43 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Discord.WebSocket;
+using Discord.Commands;
 
 namespace TheLostBot.Extensions;
 
 public static class TaxadosExtension
 {
-    public static List<ulong> IdsTaxados = new List<ulong>();
+    private static readonly Dictionary<ulong, List<ulong>> IdsTaxados = new();
 
-    public static async Task VerificarTaxado(this SocketUserMessage message)
+    public static void Add(ulong guildId, ulong userId)
     {
-        if (IdsTaxados.Contains(message.Author.Id))
+        // verificar se o server ja está no dictionary
+        if (!IdsTaxados.ContainsKey(guildId))
         {
-            await message.DeleteAsync();
+            // se não tiver, adiciona
+            IdsTaxados.Add(guildId, new List<ulong> { userId });
+            return;
         }
+
+        // verifica se o user já está taxado nesse server
+        var taxados = IdsTaxados[guildId];
+        if (taxados.Contains(userId)) return;
+
+        // se não tiver, adiciona
+        taxados.Add(userId);
+    }
+
+    public static void Remove(ulong guildId, ulong userId)
+    {
+        if (!IdsTaxados.ContainsKey(guildId)) return;
+
+        var taxados = IdsTaxados.Where(pair => pair.Key == guildId).Select(pair => pair.Value).SingleOrDefault() ?? new List<ulong>();
+        taxados.Add(userId);
+    }
+
+    public static async Task VerificarTaxado(this SocketCommandContext message)
+    {
+        if (IdsTaxados.ContainsKey(message.Guild.Id) && IdsTaxados[message.Guild.Id].Contains(message.User.Id))
+            await message.Message.DeleteAsync();
     }
 }

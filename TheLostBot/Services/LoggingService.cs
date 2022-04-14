@@ -59,7 +59,7 @@ public class LoggingService
             case LogSeverity.Error:
             case LogSeverity.Warning:
                 var logText = FormatMessage(msg);
-                if (logText.ToLowerInvariant().Contains("consider removing the intent from your config".ToLowerInvariant()))
+                if (!ShouldLog(logText))
                     break;
 
                 SentrySdk.CaptureMessage($"{FormatMessage(msg)} {Environment.NewLine}Raw: {JsonConvert.SerializeObject(msg)}", msg.Severity.ToSentryLevel());
@@ -67,6 +67,21 @@ public class LoggingService
         }
 
         return Task.CompletedTask;
+    }
+
+    private static bool ShouldLog(string logText)
+    {
+        if (logText.ToLowerInvariant().Contains("consider removing the intent from your config".ToLowerInvariant()))
+            return false;
+
+        if (logText.ToLowerInvariant().Contains("WebSocket connection was closed".ToLowerInvariant()))
+            return false;
+
+        if (logText.ToLowerInvariant().Contains("Server requested a reconnect".ToLowerInvariant()))
+            return false;
+
+
+        return true;
     }
 
     #endregion
