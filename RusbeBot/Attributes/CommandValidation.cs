@@ -52,8 +52,6 @@ public class CommandValidation : PreconditionAttribute
         if (!string.IsNullOrWhiteSpace(rolePreconditionResult.ErrorReason))
             errorMessage.AppendLine(rolePreconditionResult.ErrorReason);
 
-        await context.Channel.SendMessageAsync(errorMessage.ToString());
-
         var logMessage = $"Erro ao executar o comando '!{command.Name}'. {Environment.NewLine}" +
                            $"Requisitado por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name} ({context.Guild.Id}/{context.Channel.Id}) {Environment.NewLine}" +
                            $"Mensagem de erro: {errorMessage} {Environment.NewLine}" +

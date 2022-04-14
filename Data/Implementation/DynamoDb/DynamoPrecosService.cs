@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using Data.Interfaces;
 using Data.Models;
 
@@ -10,8 +13,19 @@ public class DynamoPrecosService : DynamoBaseService<PrecosModel>, IPrecosServic
 {
     public async Task<PrecosModel> GetByDate(DateTime date, string guildId)
     {
-        var records = await GetAllAsync();
 
-        return records.FirstOrDefault(d => d.Data == date && d.GuildId == guildId);
+        var filters = new List<ScanCondition>
+        {
+            new(nameof(PrecosModel.Data), ScanOperator.Equal, date),
+            new(nameof(PrecosModel.GuildId), ScanOperator.Equal, guildId)
+
+        };
+
+        var result = await GetByFilters(filters);
+        return result.FirstOrDefault();
+        
+        //var records = await GetAllAsync();
+        //return records.FirstOrDefault(d => d.Data == date && d.GuildId == guildId);
+
     }
 }

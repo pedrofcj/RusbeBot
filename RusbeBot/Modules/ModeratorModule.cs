@@ -87,37 +87,28 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
 
     #region Timeout
 
-    [Command("to-s")]
-    public async Task TimeoutSegundosAsync(SocketGuildUser user, int segundos)
+    [Command("to")]
+    public async Task TimeoutAsync(SocketGuildUser user, [Remainder]string tempoText)
     {
-        await TimeoutAsync(user, TimeSpan.FromSeconds(segundos));
+        var time = GetTimeSpanFromText(tempoText);
+        await user.SetTimeOutAsync(time);
         await Context.Message.DeleteAsync();
     }
 
-    [Command("to-m")]
-    public async Task TimeoutMinutosAsync(SocketGuildUser user, int minutos)
+    private TimeSpan GetTimeSpanFromText(string text)
     {
-        await TimeoutAsync(user, TimeSpan.FromMinutes(minutos));
-        await Context.Message.DeleteAsync();
-    }
+        // extract just numbers from text
+        var numbers = new string(text.Where(char.IsDigit).ToArray());
 
-    [Command("to-h")]
-    public async Task TimeoutHorasAsync(SocketGuildUser user, int horas)
-    {
-        await TimeoutAsync(user, TimeSpan.FromHours(horas));
-        await Context.Message.DeleteAsync();
-    }
-
-    [Command("to-d")]
-    public async Task TimeoutDiasAsync(SocketGuildUser user, int dias)
-    {
-        await TimeoutAsync(user, TimeSpan.FromDays(dias));
-        await Context.Message.DeleteAsync();
-    }
-
-    private async Task TimeoutAsync(SocketGuildUser user, TimeSpan tempo)
-    {
-        await user.SetTimeOutAsync(tempo);
+        // extract unit from text
+        return text.ToLower().Last() switch
+        {
+            's' => TimeSpan.FromSeconds(int.Parse(numbers)),
+            'm' => TimeSpan.FromMinutes(int.Parse(numbers)),
+            'h' => TimeSpan.FromHours(int.Parse(numbers)),
+            'd' => TimeSpan.FromDays(int.Parse(numbers)),
+            _ => TimeSpan.FromSeconds(int.Parse(numbers))
+        };
     }
 
     #endregion

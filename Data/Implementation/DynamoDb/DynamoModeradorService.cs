@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using Data.Interfaces;
 using Data.Models;
 
@@ -9,7 +12,12 @@ public class DynamoModeradorService : DynamoBaseService<ModeradorModel>, IModera
 {
     public async Task<ModeradorModel> GetModeradorByUserIdAsync(string userId)
     {
-        var records = await GetAllAsync();
-        return records.FirstOrDefault(model => model.UserId == userId);
+        var filters = new List<ScanCondition>
+        {
+            new(nameof(ModeradorModel.UserId), ScanOperator.Equal, userId)
+        };
+
+        var result = await GetByFilters(filters);
+        return result.FirstOrDefault();
     }
 }
