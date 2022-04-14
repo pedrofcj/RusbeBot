@@ -1,7 +1,7 @@
 ﻿using Data.Interfaces;
 using Discord.Commands;
 
-namespace TheLostBot.Modules.Config;
+namespace RusbeBot.Modules.Config;
 
 [Name("Config")]
 [Group("config")]

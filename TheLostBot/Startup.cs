@@ -8,10 +8,10 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RusbeBot.Services;
 using Sentry;
-using TheLostBot.Services;
 
-namespace TheLostBot;
+namespace RusbeBot;
 
 public class Startup
 {
@@ -86,10 +86,11 @@ public class Startup
             .AddSingleton<CommandHandler>()         // Add the command handler to the collection
             .AddSingleton<StartupService>()         // Add startupservice to the collection
             .AddSingleton<LoggingService>()         // Add loggingservice to the collection
-            .AddSingleton<ITheLostPicturesService, SqliteTheLostPicturesService>() // Add Picture service to collection
+            .AddSingleton<IPicsService, SqlitePicsService>() // Add Picture service to collection
             .AddSingleton<IPrecosService, SqlitePrecosService>() // Add Picture service to collection
             .AddSingleton<IAllowedRolesConfigService, SqliteAllowedConfigService>() // Add roles config service to collection
             .AddSingleton<IAllowedChannelsConfigService, SqliteAllowedChannelsConfigService>() // Add channels config service to collection
+            .AddSingleton<IModeradorService, SqliteModeradorService>() // Add Moderador config service to collection
             .AddSingleton<Random>()                 // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
             

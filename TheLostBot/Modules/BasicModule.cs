@@ -2,9 +2,9 @@
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using TheLostBot.Attributes;
+using RusbeBot.Attributes;
 
-namespace TheLostBot.Modules;
+namespace RusbeBot.Modules;
 
 [CommandValidation(false, true)]
 [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]

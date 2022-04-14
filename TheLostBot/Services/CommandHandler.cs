@@ -5,12 +5,11 @@ using Data.Interfaces;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
+using RusbeBot.Extensions;
+using RusbeBot.Helpers;
 using Sentry;
-using TheLostBot.Extensions;
-using TheLostBot.Helpers;
 
-
-namespace TheLostBot.Services;
+namespace RusbeBot.Services;
 
 public class CommandHandler
 {
@@ -84,17 +83,16 @@ public class CommandHandler
                 var logTags = new List<KeyValuePair<string, string>>
                 {
                     new("Tipo", "Comando"),
-                    new("Guild Name", context.Guild.Name),
-                    new("Guild Id", context.Guild.Id.ToString()),
-                    new("Channel Name", context.Channel.Name),
-                    new("Channel Id", context.Channel.Id.ToString()),
-                    new("User", $"{context.User.Username}#{context.User.Discriminator}"),
-                    new("User Id", context.User.Id.ToString()),
+                    new("Guild Name", context.Guild?.Name),
+                    new("Guild Id", context.Guild?.Id.ToString()),
+                    new("Channel Name", context.Channel?.Name),
+                    new("Channel Id", context.Channel?.Id.ToString()),
+                    new("User", $"{context.User?.Username}#{context.User?.Discriminator}"),
+                    new("User Id", context.User?.Id.ToString()),
                 };
 
-                SentrySdk.CaptureMessage($"Comando executado: {context.Message.Content} {Environment.NewLine}" +
-                                         $"Mensagem: '{context.Message.Content}' por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name} ({context.Guild.Id}/{context.Channel.Id})",
-
+                SentrySdk.CaptureMessage($"Comando executado: {msg.Content} {Environment.NewLine}" +
+                                         $"Mensagem: '{msg.Content}'",
                     scope =>
                     {
                         scope.SetTags(logTags);

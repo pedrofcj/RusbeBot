@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using TheLostBot.Attributes;
-using TheLostBot.Extensions;
+using RusbeBot.Attributes;
+using RusbeBot.Extensions;
 
-namespace TheLostBot.Modules;
+namespace RusbeBot.Modules;
 
 [Name("Moderator")]
 [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]

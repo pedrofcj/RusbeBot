@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TheLostBot;
+namespace RusbeBot;
 
 internal class Program
 {

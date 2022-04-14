@@ -6,7 +6,7 @@ using Data.Interfaces;
 using Data.Models;
 using Discord.WebSocket;
 
-namespace TheLostBot.Extensions;
+namespace RusbeBot.Extensions;
 
 public static class CheckPriceExtension
 {

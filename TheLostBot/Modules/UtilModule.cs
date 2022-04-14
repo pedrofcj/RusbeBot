@@ -5,12 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
-using Discord.Interactions;
 using Discord.WebSocket;
-using TheLostBot.Attributes;
+using RusbeBot.Attributes;
 using ContextType = Discord.Commands.ContextType;
 
-namespace TheLostBot.Modules;
+namespace RusbeBot.Modules;
 
 [CommandValidation(false, false)]
 [Discord.Commands.RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]

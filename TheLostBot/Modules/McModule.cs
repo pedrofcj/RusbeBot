@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Data.Interfaces;
 using Data.Models;
 using Discord.Commands;
-using TheLostBot.Attributes;
-using TheLostBot.Helpers;
+using RusbeBot.Attributes;
+using RusbeBot.Helpers;
 
-namespace TheLostBot.Modules;
+namespace RusbeBot.Modules;
 
 [CommandValidation(true, true)]
 [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]

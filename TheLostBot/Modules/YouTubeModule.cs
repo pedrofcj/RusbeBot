@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using CliWrap;
 using Discord;
@@ -10,7 +9,7 @@ using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
 
-namespace TheLostBot.Modules;
+namespace RusbeBot.Modules;
 
 public class YouTubeModule : ModuleBase<SocketCommandContext>
 {

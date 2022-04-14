@@ -6,7 +6,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 
-namespace TheLostBot.Services;
+namespace RusbeBot.Services;
 
 public class StartupService
 {

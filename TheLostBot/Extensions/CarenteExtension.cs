@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 
-namespace TheLostBot.Extensions;
+namespace RusbeBot.Extensions;
 
 public static class CarenteExtension
 {

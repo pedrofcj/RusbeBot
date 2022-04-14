@@ -2,7 +2,7 @@
 using Discord;
 using Sentry;
 
-namespace TheLostBot.Extensions;
+namespace RusbeBot.Extensions;
 
 public static class LogSeverityExtension
 {

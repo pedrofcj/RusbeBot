@@ -5,10 +5,10 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Newtonsoft.Json;
+using RusbeBot.Extensions;
 using Sentry;
-using TheLostBot.Extensions;
 
-namespace TheLostBot.Services;
+namespace RusbeBot.Services;
 
 public class LoggingService
 {

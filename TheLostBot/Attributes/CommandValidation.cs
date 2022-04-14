@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Data.Interfaces;
 using Discord;
 using Discord.Commands;
+using RusbeBot.Helpers;
 using Sentry;
-using TheLostBot.Helpers;
 
-namespace TheLostBot.Attributes;
+namespace RusbeBot.Attributes;
 
 public class CommandValidation : PreconditionAttribute
 {
@@ -34,6 +34,9 @@ public class CommandValidation : PreconditionAttribute
 
         // override de roles para o dono do server
         if (user.Id == user.Guild.OwnerId)
+            return PreconditionResult.FromSuccess();
+
+        if (await ValidateModeradorAsync(context, services, user))
             return PreconditionResult.FromSuccess();
 
         var chanelPreconditionResult = await ValidateChannelAsync(context, command, services);
@@ -111,6 +114,20 @@ public class CommandValidation : PreconditionAttribute
 
         // retorna o resultado
         return authorizedRoles.Intersect(userRoles).Any() ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Você não tem permissão para executar esse comando. Entre em contato com o dono do servidor para reportar este erro.");
+    }
+
+    private async Task<bool> ValidateModeradorAsync(ICommandContext context, IServiceProvider services, IGuildUser user)
+    {
+        // busca no DI o serviço de configuração
+        if (services.GetService(typeof(IModeradorService)) is not IModeradorService allowedConfig)
+        {
+            SentryHelper.Log("Houve um erro ao tentar buscar as configurações para este comando. Entre em contato com o dono do servidor para reportar este erro.", context, SentryLevel.Error);
+            return false;
+        }
+
+        // busca se o user é moderador
+        var moderador = await allowedConfig.GetModeradorByUserIdAsync(user.Id.ToString());
+        return moderador != null;
     }
 
 }

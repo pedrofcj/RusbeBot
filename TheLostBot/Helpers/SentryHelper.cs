@@ -4,7 +4,7 @@ using Discord;
 using Discord.Commands;
 using Sentry;
 
-namespace TheLostBot.Helpers;
+namespace RusbeBot.Helpers;
 
 public static class SentryHelper
 {
@@ -18,12 +18,12 @@ public static class SentryHelper
         extraScope ??= new List<KeyValuePair<string, string>>();
         extraScope.AddRange(new List<KeyValuePair<string, string>>
         {
-            new("Guild Name", context.Guild.Name),
-            new("Guild Id", context.Guild.Id.ToString()),
-            new("Channel Name", context.Channel.Name),
-            new("Channel Id", context.Channel.Id.ToString()),
-            new("User", $"{context.User.Username}#{context.User.Discriminator}"),
-            new("User Id", context.User.Id.ToString()),
+            new("Guild Name", context.Guild?.Name),
+            new("Guild Id", context.Guild?.Id.ToString()),
+            new("Channel Name", context.Channel?.Name),
+            new("Channel Id", context.Channel?.Id.ToString()),
+            new("User", $"{context.User?.Username}#{context.User?.Discriminator}"),
+            new("User Id", context.User?.Id.ToString()),
         });
 
         if (context.User is IGuildUser user)

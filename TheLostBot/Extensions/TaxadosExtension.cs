@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord.Commands;
 
-namespace TheLostBot.Extensions;
+namespace RusbeBot.Extensions;
 
 public static class TaxadosExtension
 {
@@ -37,6 +37,8 @@ public static class TaxadosExtension
 
     public static async Task VerificarTaxado(this SocketCommandContext message)
     {
+        if (message.IsPrivate) return;
+
         if (IdsTaxados.ContainsKey(message.Guild.Id) && IdsTaxados[message.Guild.Id].Contains(message.User.Id))
             await message.Message.DeleteAsync();
     }

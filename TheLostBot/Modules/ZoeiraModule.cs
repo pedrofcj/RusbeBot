@@ -6,28 +6,28 @@ using Data.Interfaces;
 using Data.Models;
 using Discord.Commands;
 using Discord.WebSocket;
-using TheLostBot.Attributes;
+using RusbeBot.Attributes;
 
-namespace TheLostBot.Modules;
+namespace RusbeBot.Modules;
 
 [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
 [CommandValidation(false, false)]
 public class ZoeiraModule : ModuleBase<SocketCommandContext>
 {
 
-    private readonly ITheLostPicturesService _theLostPicturesService;
+    private readonly IPicsService _picsService;
     private readonly Random _random;
 
-    public ZoeiraModule(ITheLostPicturesService theLostPicturesService, Random rand)
+    public ZoeiraModule(IPicsService picsService, Random rand)
     {
-        _theLostPicturesService = theLostPicturesService;
+        _picsService = picsService;
         _random = rand;
     }
 
     #region Pics
 
-    private static List<TheLostPictures> _pics;
-    private List<TheLostPictures> Pics => _pics ??= _theLostPicturesService.GetAllAsync().GetAwaiter().GetResult();
+    private static List<Pics> _pics;
+    private List<Pics> Pics => _pics ??= _picsService.GetAllAsync().GetAwaiter().GetResult();
 
     [Command("pic")]
     public async Task PicAsync(string category)
@@ -40,7 +40,7 @@ public class ZoeiraModule : ModuleBase<SocketCommandContext>
     [Command("addpic")]
     public async Task AddPicAsync(string category, string url)
     {
-        var newPic = new TheLostPictures
+        var newPic = new Pics
         {
             Id = Guid.NewGuid().ToString(),
             Category = category,
@@ -48,7 +48,7 @@ public class ZoeiraModule : ModuleBase<SocketCommandContext>
             GuildId = Context.Guild.Id.ToString()
         };
 
-        await _theLostPicturesService.InsertAsync(newPic);
+        await _picsService.InsertAsync(newPic);
         var msg = await ReplyAsync("Nova foto adicionada!");
         await Context.Message.DeleteAsync();
         _pics = null;

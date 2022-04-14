@@ -6,9 +6,9 @@ using Data.Interfaces;
 using Data.Models;
 using Discord;
 using Discord.Commands;
-using TheLostBot.Attributes;
+using RusbeBot.Attributes;
 
-namespace TheLostBot.Modules.Config;
+namespace RusbeBot.Modules.Config;
 
 [CommandValidation(false, true)]
 [RequireContext(ContextType.Guild, ErrorMessage = "Este comando só pode ser utilizado em um servidor")]
