@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RusbeBot", "TheLostBot\RusbeBot.csproj", "{461B15B2-7763-460C-9492-C3AA08B3F2EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RusbeBot", "RusbeBot\RusbeBot.csproj", "{461B15B2-7763-460C-9492-C3AA08B3F2EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{BBBACC14-DD0E-4B0A-A2A0-811F08E958AC}"
 EndProject

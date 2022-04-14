@@ -1,0 +1,10 @@
+﻿prefix: "!"
+sqlite-file: "F:\\Users\\pedro\\Desktop\\TheLostBot.db"
+aws: 
+    accessKeyId: "AKIATHDXMDSX23OWNY4A"
+    secretAccessKey: "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"
+tokens:
+    test: "OTE3NzI5Njg1MTE3NDg5MjAy.Ya88Xw.rMICZzCzfzfBppkG4Pb3Jnuvgos"
+    production: "OTE0OTA4NTM5MzI2MTg1NDcy.YaT4-Q.iqaYlMi-NU2h2Fpne5ZZ2h-A-OM"
+    discord: "OTE3NzI5Njg1MTE3NDg5MjAy.Ya88Xw.rMICZzCzfzfBppkG4Pb3Jnuvgos"
+    sentryo: "https://3b43b1b43af94b4f88a2264c1da07f6b@o157332.ingest.sentry.io/6301178"
