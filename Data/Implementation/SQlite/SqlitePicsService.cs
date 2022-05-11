@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Data.Implementation.SQlite;
 
-public class SqlitePicsService : SqliteBaseService<Pics>, IPicsService
+public class SqlitePicsService : SqliteBaseService<PicsModel>, IPicsService
 {
     public SqlitePicsService(IConfigurationRoot configurationRoot) : base(configurationRoot)
     {

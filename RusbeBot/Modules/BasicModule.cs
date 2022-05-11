@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using RusbeBot.Attributes;
+using System.Threading.Tasks;
 
 namespace RusbeBot.Modules;
 

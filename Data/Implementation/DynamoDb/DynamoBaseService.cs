@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Amazon;
+﻿using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Data.Interfaces;
 using Data.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Data.Implementation.DynamoDb;
 
@@ -13,7 +13,7 @@ public class DynamoBaseService<T> : IDbService<T> where T : BaseModel
     protected readonly AmazonDynamoDBClient Client;
     protected readonly DynamoDBContext Context;
 
-    public DynamoBaseService(string regionEndpoint = "eu-west-1")
+    public DynamoBaseService(string regionEndpoint = "us-east-1")
     {
         var config = new AmazonDynamoDBConfig
         {

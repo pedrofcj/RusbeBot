@@ -1,10 +1,10 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using CliWrap;
+﻿using CliWrap;
 using Discord;
 using Discord.Audio;
 using Discord.Commands;
 using Discord.WebSocket;
+using System.IO;
+using System.Threading.Tasks;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
@@ -51,10 +51,10 @@ public class YouTubeModule : ModuleBase<SocketCommandContext>
             .ExecuteAsync();
 
         await using var discord = audioClient.CreatePCMStream(AudioApplication.Mixed);
-        
+
         try
         {
-            await discord.WriteAsync(memoryStream.ToArray(), 0, (int) memoryStream.Length);
+            await discord.WriteAsync(memoryStream.ToArray(), 0, (int)memoryStream.Length);
         }
         finally
         {

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Discord.Commands;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Discord.Commands;
 
 namespace RusbeBot.Extensions;
 

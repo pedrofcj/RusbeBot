@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Data.Models;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Data.Implementation.SQlite;
 
-public class SqliteAllowedConfigService : SqliteBaseService<AllowedRolesConfigModel>, IAllowedRolesConfigService
+public class SqliteAllowedRolesConfigService : SqliteBaseService<AllowedRolesConfigModel>, IAllowedRolesConfigService
 {
-    public SqliteAllowedConfigService(IConfigurationRoot configurationRoot) : base(configurationRoot)
+    public SqliteAllowedRolesConfigService(IConfigurationRoot configurationRoot) : base(configurationRoot)
     {
     }
 
@@ -17,5 +17,5 @@ public class SqliteAllowedConfigService : SqliteBaseService<AllowedRolesConfigMo
         var response = await Db.Table<AllowedRolesConfigModel>().Where(model => model.CommandName == command && model.GuildId == guildId).ToListAsync();
         return response;
     }
-     
+
 }

@@ -1,6 +1,0 @@
-﻿prefix: "!"
-aws: 
-    accessKeyId: ""
-    secretAccessKey: ""
-tokens:
-    discord: ""

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Data.Interfaces;
+using Data.Models;
+using Discord.WebSocket;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Data.Interfaces;
-using Data.Models;
-using Discord.WebSocket;
 
 namespace RusbeBot.Extensions;
 
@@ -13,7 +13,7 @@ public static class CheckPriceExtension
 
     public static async Task CheckPrice(this SocketUserMessage message, IPrecosService precosService)
     {
-        if (message.Channel is not SocketGuildChannel {Id: (877332271764504636 or 934125922284634232 or 914914042966069258)} channel) return;
+        if (message.Channel is not SocketGuildChannel { Id: (877332271764504636 or 934125922284634232 or 914914042966069258) } channel) return;
 
         var str = CleanString(message.Content);
         var parts = str.Split(' ');

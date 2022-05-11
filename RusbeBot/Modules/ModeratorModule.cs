@@ -1,11 +1,11 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using RusbeBot.Attributes;
 using RusbeBot.Extensions;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RusbeBot.Modules;
 
@@ -20,7 +20,7 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
     [Command("taxar")]
     public async Task TaxarAsync(SocketGuildUser user)
     {
-        
+
         TaxadosExtension.Add(Context.Guild.Id, user.Id);
         await ReplyAsync($"Você está sendo taxado {user.Mention}");
         await Context.Message.DeleteAsync();
@@ -87,9 +87,16 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
 
     #region Timeout
 
-    [Command("to")]
-    public async Task TimeoutAsync(SocketGuildUser user, [Remainder]string tempoText)
+    [Command("tot")]
+    public async Task TimeoutAsync(SocketGuildUser user, [Remainder] string tempoText)
     {
+        // check if user is admin
+        if (user.GuildPermissions.Administrator)
+        {
+            await ReplyAsync($"{user.Mention} é um administrador e não pode tomar timeout.");
+            return;
+        }
+
         var time = GetTimeSpanFromText(tempoText);
         await user.SetTimeOutAsync(time);
         await Context.Message.DeleteAsync();

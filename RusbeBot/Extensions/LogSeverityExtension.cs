@@ -1,6 +1,6 @@
-﻿using System;
-using Discord;
+﻿using Discord;
 using Sentry;
+using System;
 
 namespace RusbeBot.Extensions;
 
@@ -12,7 +12,7 @@ public static class LogSeverityExtension
         {
             case LogSeverity.Critical:
                 return SentryLevel.Fatal;
-            
+
             case LogSeverity.Error:
                 return SentryLevel.Error;
 
@@ -25,7 +25,7 @@ public static class LogSeverityExtension
             case LogSeverity.Verbose:
             case LogSeverity.Debug:
                 return SentryLevel.Debug;
-            
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(logSeverity), logSeverity, null);
         }

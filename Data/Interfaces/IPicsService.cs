@@ -2,7 +2,7 @@
 
 namespace Data.Interfaces;
 
-public interface IPicsService : IDbService<Pics>
+public interface IPicsService : IDbService<PicsModel>
 {
-        
+
 }

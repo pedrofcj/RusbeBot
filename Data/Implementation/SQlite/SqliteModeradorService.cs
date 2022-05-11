@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Data.Models;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace Data.Implementation.SQlite;
 

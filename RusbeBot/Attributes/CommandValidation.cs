@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Discord;
 using Discord.Commands;
 using RusbeBot.Helpers;
 using Sentry;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RusbeBot.Attributes;
 
@@ -24,7 +24,7 @@ public class CommandValidation : PreconditionAttribute
 
     public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
     {
-        if (!(context.User is IGuildUser user))
+        if (context.User is not IGuildUser user)
             return PreconditionResult.FromError("Este comando só pode ser utilizado em um servidor.");
 
         // override if message was sent by bot owner

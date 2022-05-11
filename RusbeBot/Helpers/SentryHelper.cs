@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Sentry;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RusbeBot.Helpers;
 
 public static class SentryHelper
 {
-    public static void Log(string msg, ICommandContext context, SentryLevel level = SentryLevel.Info , List<KeyValuePair<string, string>> extraScope = null)
+    public static void Log(string msg, ICommandContext context, SentryLevel level = SentryLevel.Info, List<KeyValuePair<string, string>> extraScope = null)
     {
         SentrySdk.CaptureMessage(msg, scope => scope.ConfigureScope(context, extraScope), level);
     }
@@ -35,7 +35,7 @@ public static class SentryHelper
                 new("Role Names", string.Join(',', roleNames))
             });
         }
-        
+
         scope.SetTags(extraScope);
     }
 }

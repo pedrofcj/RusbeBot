@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Discord;
+﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Newtonsoft.Json;
 using RusbeBot.Extensions;
 using Sentry;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace RusbeBot.Services;
 
@@ -25,7 +25,7 @@ public class LoggingService
 
         discord.Log += SentryDiscordLogAsync;
     }
-        
+
     private Task OnLogAsync(LogMessage msg)
     {
         if (!Directory.Exists(LogDirectory))     // Create the log directory if it doesn't exist
@@ -50,7 +50,7 @@ public class LoggingService
     private static string FormatMessage(LogMessage msg) => $"{DateTime.UtcNow:hh:mm:ss} [{msg.Severity}] {msg.Source}: {msg.Exception?.ToString() ?? msg.Message}";
 
     #region Sentry
- 
+
     private static Task SentryDiscordLogAsync(LogMessage msg)
     {
         switch (msg.Severity)

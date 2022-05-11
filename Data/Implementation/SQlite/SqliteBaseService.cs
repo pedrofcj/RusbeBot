@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Data.Models;
 using Microsoft.Extensions.Configuration;
 using SQLite;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Data.Implementation.SQlite;
 
-public class SqliteBaseService<T>: IDbService<T> where T : BaseModel, new()
+public class SqliteBaseService<T> : IDbService<T> where T : BaseModel, new()
 {
     protected readonly SQLiteAsyncConnection Db;
 

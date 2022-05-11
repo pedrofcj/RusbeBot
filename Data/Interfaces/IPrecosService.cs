@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Data.Models;
+using System;
 using System.Threading.Tasks;
-using Data.Models;
 
 namespace Data.Interfaces;
 

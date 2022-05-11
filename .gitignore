@@ -363,3 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 RusbeBot/_config.yml
+
+Maintenance/_config.yml
+
+.idea/

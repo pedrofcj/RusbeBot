@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using RusbeBot.Extensions;
 using RusbeBot.Helpers;
 using Sentry;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RusbeBot.Services;
 
@@ -61,7 +61,7 @@ public class CommandHandler
         });
         return Task.CompletedTask;
     }
-        
+
     private async Task OnMessageReceivedAsync(SocketMessage s)
     {
         if (s is not SocketUserMessage msg) return;
@@ -100,7 +100,7 @@ public class CommandHandler
                 return;
             }
 
-            await context.Channel.SendMessageAsync(result.ToString());
+            //await context.Channel.SendMessageAsync(result.ToString());
             SentryHelper.Log($"Erro ao tentar executar o comando da mensagem '{msg.Content}'", context, SentryLevel.Error);
         }
     }

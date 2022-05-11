@@ -3,6 +3,6 @@ using Data.Models;
 
 namespace Data.Implementation.DynamoDb;
 
-public class DynamoPicsService : DynamoBaseService<Pics>, IPicsService
+public class DynamoPicsService : DynamoBaseService<PicsModel>, IPicsService
 {
 }

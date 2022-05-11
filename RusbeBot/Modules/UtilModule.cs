@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using RusbeBot.Attributes;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
-using RusbeBot.Attributes;
 using ContextType = Discord.Commands.ContextType;
 
 namespace RusbeBot.Modules;

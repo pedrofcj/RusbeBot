@@ -4,7 +4,7 @@ namespace Data.Models;
 
 [DynamoDBTable("Pics")]
 [SQLite.Table("Pics")]
-public class Pics : BaseModel
+public class PicsModel : BaseModel
 {
     [DynamoDBProperty] public string Category { get; set; }
 

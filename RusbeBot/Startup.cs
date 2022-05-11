@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Data.Implementation.SQlite;
+﻿using Data.Implementation.SQlite;
 using Data.Interfaces;
 using Data.Values;
 using Discord;
@@ -10,12 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RusbeBot.Services;
 using Sentry;
+using System;
+using System.Threading.Tasks;
 
 namespace RusbeBot;
 
 public class Startup
 {
-    public IConfigurationRoot Configuration { get; }
+    private IConfigurationRoot Configuration { get; }
 
     public Startup(string[] args)
     {
@@ -40,7 +40,7 @@ public class Startup
         await startup.RunAsync();
     }
 
-    public async Task RunAsync()
+    private async Task RunAsync()
     {
         AwsCredentials.SetCredentials(Configuration["aws:accessKeyId"], Configuration["aws:secretAccessKey"]);
 
@@ -71,28 +71,28 @@ public class Startup
     private void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
-            {                                           // Add discord to the collection
-                LogLevel = LogSeverity.Verbose,         // Tell the logger to give Verbose amount of info
-                MessageCacheSize = 1000,                // Cache 1,000 messages per channel
-                AlwaysDownloadUsers = true,             // Download users to cache
-                GatewayIntents = GatewayIntents.All,    // Set all the intents available (a bit overkill, but the bot is growing fast)
+        {                                           // Add discord to the collection
+            LogLevel = LogSeverity.Verbose,         // Tell the logger to give Verbose amount of info
+            MessageCacheSize = 1000,                // Cache 1,000 messages per channel
+            AlwaysDownloadUsers = true,             // Download users to cache
+            GatewayIntents = GatewayIntents.All,    // Set all the intents available (a bit overkill, but the bot is growing fast)
 
-            }))
+        }))
             .AddSingleton(new CommandService(new CommandServiceConfig
             {                                       // Add the command service to the collection
                 LogLevel = LogSeverity.Verbose,     // Tell the logger to give Verbose amount of info
                 DefaultRunMode = RunMode.Async,     // Force all commands to run async by default
             }))
             .AddSingleton<CommandHandler>()         // Add the command handler to the collection
-            .AddSingleton<StartupService>()         // Add startupservice to the collection
-            .AddSingleton<LoggingService>()         // Add loggingservice to the collection
+            .AddSingleton<StartupService>()         // Add StartupService to the collection
+            .AddSingleton<LoggingService>()         // Add LoggingService to the collection
             .AddSingleton<IPicsService, SqlitePicsService>() // Add Picture service to collection
             .AddSingleton<IPrecosService, SqlitePrecosService>() // Add Picture service to collection
-            .AddSingleton<IAllowedRolesConfigService, SqliteAllowedConfigService>() // Add roles config service to collection
+            .AddSingleton<IAllowedRolesConfigService, SqliteAllowedRolesConfigService>() // Add roles config service to collection
             .AddSingleton<IAllowedChannelsConfigService, SqliteAllowedChannelsConfigService>() // Add channels config service to collection
             .AddSingleton<IModeradorService, SqliteModeradorService>() // Add Moderador config service to collection
             .AddSingleton<Random>()                 // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
-            
+
     }
 }

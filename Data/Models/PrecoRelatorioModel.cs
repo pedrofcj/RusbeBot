@@ -21,15 +21,15 @@ public class PrecoRelatorioModel
     public double MunicaoPMarcado { get; set; }
     public double MunicaoMMarcado { get; set; }
     public double MunicaoGMarcado { get; set; }
-        
+
     public double PistolaPMarcado { get; set; }
     public double PistolaMMarcado { get; set; }
     public double PistolaGMarcado { get; set; }
-        
+
     public double SMGPMarcado { get; set; }
     public double SMGMMarcado { get; set; }
     public double SMGGMarcado { get; set; }
-        
+
     public double RiflePMarcado { get; set; }
     public double RifleMMarcado { get; set; }
     public double RifleGMarcado { get; set; }

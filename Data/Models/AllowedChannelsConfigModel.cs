@@ -6,6 +6,7 @@ namespace Data.Models;
 [SQLite.Table("AllowedChannelsConfig")]
 public class AllowedChannelsConfigModel : BaseConfigModel
 {
+    [DynamoDBProperty]
     public string ChannelId { get; set; }
 
 }

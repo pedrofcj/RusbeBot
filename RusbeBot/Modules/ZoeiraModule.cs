@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Data.Interfaces;
 using Data.Models;
 using Discord.Commands;
 using Discord.WebSocket;
 using RusbeBot.Attributes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RusbeBot.Modules;
 
@@ -26,8 +26,8 @@ public class ZoeiraModule : ModuleBase<SocketCommandContext>
 
     #region Pics
 
-    private static List<Pics> _pics;
-    private List<Pics> Pics => _pics ??= _picsService.GetAllAsync().GetAwaiter().GetResult();
+    private static List<PicsModel> _pics;
+    private List<PicsModel> Pics => _pics ??= _picsService.GetAllAsync().GetAwaiter().GetResult();
 
     [Command("pic")]
     public async Task PicAsync(string category)
@@ -40,7 +40,7 @@ public class ZoeiraModule : ModuleBase<SocketCommandContext>
     [Command("addpic")]
     public async Task AddPicAsync(string category, string url)
     {
-        var newPic = new Pics
+        var newPic = new PicsModel
         {
             Id = Guid.NewGuid().ToString(),
             Category = category,

@@ -6,6 +6,7 @@ namespace Data.Models;
 [SQLite.Table("AllowedRolesConfig")]
 public class AllowedRolesConfigModel : BaseConfigModel
 {
+    [DynamoDBProperty]
     public string RoleId { get; set; }
 
 }
