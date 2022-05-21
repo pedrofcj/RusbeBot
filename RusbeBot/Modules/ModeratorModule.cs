@@ -87,7 +87,7 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
 
     #region Timeout
 
-    [Command("tot")]
+    [Command("to")]
     public async Task TimeoutAsync(SocketGuildUser user, [Remainder] string tempoText)
     {
         // check if user is admin
@@ -98,6 +98,13 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
         }
 
         var time = GetTimeSpanFromText(tempoText);
+
+        if (time > TimeSpan.FromDays(28))
+        {
+            await ReplyAsync($"{user.Mention} não pode tomar timeout por mais de 28 dias.");
+            return;
+        }
+        
         await user.SetTimeOutAsync(time);
         await Context.Message.DeleteAsync();
     }

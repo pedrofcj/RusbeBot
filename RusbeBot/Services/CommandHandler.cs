@@ -7,7 +7,11 @@ using RusbeBot.Helpers;
 using Sentry;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Discord;
+using MediatR;
+using RusbeBot.Events;
 
 namespace RusbeBot.Services;
 
@@ -18,6 +22,7 @@ public class CommandHandler
     private readonly IConfigurationRoot _config;
     private readonly IServiceProvider _provider;
     private readonly IPrecosService _precosService;
+    private readonly IMediator _mediator;
 
     // DiscordSocketClient, CommandService, IConfigurationRoot, and IServiceProvider are injected automatically from the IServiceProvider
     public CommandHandler(
@@ -25,17 +30,30 @@ public class CommandHandler
         CommandService commands,
         IConfigurationRoot config,
         IServiceProvider provider,
-        IPrecosService precosService)
+        IPrecosService precosService, 
+        IMediator mediator)
     {
         _discord = discord;
         _commands = commands;
         _config = config;
         _provider = provider;
         _precosService = precosService;
+        _mediator = mediator;
 
         _discord.MessageReceived += OnMessageReceivedAsync;
         _discord.JoinedGuild += DiscordOnJoinedGuild;
         _discord.LeftGuild += DiscordOnLeftGuild;
+        _discord.ButtonExecuted += DiscordOnButtonExecuted;
+    }
+
+    private async Task DiscordOnButtonExecuted(SocketMessageComponent arg)
+    {
+        switch (arg.Data.CustomId)
+        {
+            case { } s when s.StartsWith("getActors"):
+                await _mediator.Publish(new GetActorsEvent(arg));
+                break;
+        }
     }
 
     private static Task DiscordOnJoinedGuild(SocketGuild arg)

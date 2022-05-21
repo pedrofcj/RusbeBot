@@ -40,12 +40,16 @@ public class UtilModule : ModuleBase<SocketCommandContext>
         await ReplyAsync(response.ToString());
     }
 
+    #endregion
+
+    #region Info
+
     [Command("info")]
     public async Task Info(SocketUser user)
     {
         var embedBuilder = new EmbedBuilder
         {
-            Title = $"Infromações de {user.Username}#{user.Discriminator}"
+            Title = $"Informações de {user.Username}#{user.Discriminator}"
         };
 
         embedBuilder.AddField("Criado em", user.CreatedAt);

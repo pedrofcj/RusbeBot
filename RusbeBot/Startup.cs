@@ -10,6 +10,10 @@ using RusbeBot.Services;
 using Sentry;
 using System;
 using System.Threading.Tasks;
+using APIs.Services;
+using IMDbApiLib;
+using MediatR;
+using Refit;
 
 namespace RusbeBot;
 
@@ -70,6 +74,9 @@ public class Startup
 
     private void ConfigureServices(IServiceCollection services)
     {
+
+        var imdbApiKey = Configuration["tokens:imdbApiKey"];
+        
         services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig
         {                                           // Add discord to the collection
             LogLevel = LogSeverity.Verbose,         // Tell the logger to give Verbose amount of info
@@ -91,8 +98,11 @@ public class Startup
             .AddSingleton<IAllowedRolesConfigService, SqliteAllowedRolesConfigService>() // Add roles config service to collection
             .AddSingleton<IAllowedChannelsConfigService, SqliteAllowedChannelsConfigService>() // Add channels config service to collection
             .AddSingleton<IModeradorService, SqliteModeradorService>() // Add Moderador config service to collection
+            .AddSingleton(new ApiLib(imdbApiKey)) // Add IMDB service to collection
+            .AddMediatR(typeof(Program))      // Add MediatR to the collection
             .AddSingleton<Random>()                 // Add random to the collection
             .AddSingleton(Configuration);           // Add the configuration to the collection
+
 
     }
 }
