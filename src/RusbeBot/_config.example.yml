@@ -1,0 +1,9 @@
+﻿prefix: "!"
+sqlite-file: ""
+aws:
+  accessKeyId: ""
+  secretAccessKey: ""
+tokens:
+  discord: ""
+  sentry: ""
+  imdbApiKey: ""

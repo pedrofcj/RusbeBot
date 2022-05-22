@@ -362,8 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-RusbeBot/_config.yml
-
-Maintenance/_config.yml
+src/RusbeBot/_config.yml
+src/RusbeBot.Maintenance/_config.yml
 
 .idea/

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assembly name="Discord.Net.Commands">
+    <member name="T:Discord.Commands.ModuleBase`1">
+        <attribute ctor="M:JetBrains.Annotations.UsedImplicitlyAttribute.#ctor(JetBrains.Annotations.ImplicitUseTargetFlags)">
+            <argument>7</argument> <!-- ImplicitUseTargetFlags Itself, Members, WithInheritors -->
+        </attribute>
+    </member>
+</assembly>
