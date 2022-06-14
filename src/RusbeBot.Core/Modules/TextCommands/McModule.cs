@@ -40,6 +40,12 @@ public class McModule : ModuleBase<SocketCommandContext>
         var response = new StringBuilder();
 
         response.AppendLine($"RusbeBot.Data: {precos.Data.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
+        
+        // Kit
+        response.AppendLine(FormatValue("Kit P", precos.KitReparosP, media.KitReparosP));
+        response.AppendLine(FormatValue("Kit M", precos.KitReparosM, media.KitReparosM));
+        response.AppendLine(FormatValue("Kit G", precos.KitReparosG, media.KitReparosG));
+        response.AppendLine();
 
         // Munição
         response.AppendLine(FormatValue("Munição P", precos.MunicaoP, media.MunicaoP));
@@ -66,6 +72,12 @@ public class McModule : ModuleBase<SocketCommandContext>
         response.AppendLine();
 
         response.AppendLine("DINHEIRO MARCADO");
+        
+        // Kit (dinheiro marcado)
+        response.AppendLine(FormatValue("Kit P", precos.KitReparosPMarcado, media.KitReparosPMarcado));
+        response.AppendLine(FormatValue("Kit M", precos.KitReparosMMarcado, media.KitReparosMMarcado));
+        response.AppendLine(FormatValue("Kit G", precos.KitReparosGMarcado, media.KitReparosGMarcado));
+        response.AppendLine();
 
         // Munição (dinheiro marcado)
         response.AppendLine(FormatValue("Munição P", precos.MunicaoPMarcado, media.MunicaoPMarcado));

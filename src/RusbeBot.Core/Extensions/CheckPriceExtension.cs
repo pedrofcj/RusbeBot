@@ -26,7 +26,7 @@ public static class CheckPriceExtension
             }
         }
 
-        if (values.Count != 24)
+        if (values.Count != 30)
         {
             await message.Channel.SendMessageAsync("Não foi possível extrair todos os valores, por favor tente enviar novamente.");
             return;
@@ -36,38 +36,46 @@ public static class CheckPriceExtension
         {
             Data = date,
             GuildId = channel.Guild.Id.ToString(),
+            
+            KitReparosP = values[0],
+            KitReparosM = values[1],
+            KitReparosG = values[2], 
 
-            MunicaoP = values[0],
-            MunicaoM = values[1],
-            MunicaoG = values[2],
+            MunicaoP = values[3],
+            MunicaoM = values[4],
+            MunicaoG = values[5],
 
-            PistolaP = values[3],
-            PistolaM = values[4],
-            PistolaG = values[5],
+            PistolaP = values[6],
+            PistolaM = values[7],
+            PistolaG = values[8],
 
-            SMGP = values[6],
-            SMGM = values[7],
-            SMGG = values[8],
+            SMGP = values[9],
+            SMGM = values[10],
+            SMGG = values[11],
 
-            RifleP = values[9],
-            RifleM = values[10],
-            RifleG = values[11],
+            RifleP = values[12],
+            RifleM = values[13],
+            RifleG = values[14],
+            
+            KitReparosPMarcado = values[15],
+            KitReparosMMarcado = values[16],
+            KitReparosGMarcado = values[17],
 
-            MunicaoPMarcado = values[12],
-            MunicaoMMarcado = values[13],
-            MunicaoGMarcado = values[14],
+            MunicaoPMarcado = values[18],
+            MunicaoMMarcado = values[19],
+            MunicaoGMarcado = values[20],
 
-            PistolaPMarcado = values[15],
-            PistolaMMarcado = values[16],
-            PistolaGMarcado = values[17],
+            PistolaPMarcado = values[21],
+            PistolaMMarcado = values[22],
+            PistolaGMarcado = values[23],
 
-            SMGPMarcado = values[18],
-            SMGMMarcado = values[19],
-            SMGGMarcado = values[20],
+            SMGPMarcado = values[24],
+            SMGMMarcado = values[25],
+            SMGGMarcado = values[26],
 
-            RiflePMarcado = values[21],
-            RifleMMarcado = values[22],
-            RifleGMarcado = values[23],
+            RiflePMarcado = values[27],
+            RifleMMarcado = values[28],
+            RifleGMarcado = values[29],
         };
 
         var existente = await precosService.GetByDate(preco.Data, channel.Guild.Id.ToString());

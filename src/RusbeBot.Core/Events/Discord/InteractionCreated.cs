@@ -2,7 +2,7 @@
 using Discord.Interactions;
 using Discord.WebSocket;
 
-namespace RusbeBot.Core.Events;
+namespace RusbeBot.Core.Events.Discord;
 
 public class InteractionCreated
 {

@@ -32,7 +32,7 @@ public static class TaxadosExtension
         taxados.Add(userId);
     }
 
-    public static async Task VerificarTaxado(this SocketCommandContext message)
+    public static async Task VerificarTaxado(this SocketCommandContext? message)
     {
         if (message.IsPrivate) return;
 

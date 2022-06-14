@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.Interactions;
 using Microsoft.Extensions.DependencyInjection;
 using RusbeBot.Core.Events;
+using RusbeBot.Core.Events.Discord;
 using RusbeBot.Core.Handlers;
 using RusbeBot.Core.Services;
 using RusbeBot.Data.Implementation.SQlite;
@@ -14,6 +15,13 @@ public static class ServiceCollectionExtension
 {
     public static void AddBasicServices(this IServiceCollection services)
     {
+        // Discord Events
+        services.AddSingleton<JoinedGuild>();
+        services.AddSingleton<MessageReceived>();
+        services.AddSingleton<Ready>();
+        services.AddSingleton<InteractionCreated>(); 
+        services.AddSingleton<LeftGuild>();
+
         services.AddSingleton<DiscordBot>();
         services.AddSingleton<CommandService>();
         services.AddSingleton<CommandHandler>();
@@ -22,9 +30,6 @@ public static class ServiceCollectionExtension
         services.AddSingleton<Random>();
         services.AddSingleton<InteractionService>();
         services.AddSingleton<InteractionHandler>();
-        services.AddSingleton<InteractionCreated>(); 
-        services.AddSingleton<MessageReceived>();
-        services.AddSingleton<Ready>();
     }
     
     public static void AddDatabaseServices(this IServiceCollection services)

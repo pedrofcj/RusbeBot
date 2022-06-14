@@ -1,10 +1,10 @@
-﻿using System.Reflection;
-using Discord.Interactions;
+﻿using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
-using RusbeBot.Core.Services;
+using RusbeBot.Core.Helpers;
+using Sentry;
 
-namespace RusbeBot.Core.Events;
+namespace RusbeBot.Core.Events.Discord;
 
 public class Ready
 {
@@ -32,11 +32,20 @@ public class Ready
 
         if (string.IsNullOrEmpty(isDebug))
         {
-            await _interactionService.RegisterCommandsGloballyAsync();
-            return;
+            try
+            {
+                await _interactionService.RegisterCommandsGloballyAsync();
+                return;
+            }
+            catch (Exception e)
+            {
+                SentrySdk.CaptureException(e);
+                Console.WriteLine(e);
+            }
+            
         }
         
-        var guild = _config["guildId"];
+        var guild = _config["debugGuildId"];
         
         await _interactionService.RegisterCommandsToGuildAsync(Convert.ToUInt64(guild));
         

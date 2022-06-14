@@ -16,7 +16,6 @@ public class ConfigChannelsModule : ConfigModule
     }
 
     [Command("channel add")]
-
     public async Task AddConfigChannelAsync([Remainder] string input)
     {
         try

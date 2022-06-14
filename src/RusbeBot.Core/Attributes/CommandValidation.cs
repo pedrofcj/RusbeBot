@@ -18,7 +18,7 @@ public class CommandValidation : PreconditionAttribute
         _isRoleSensitive = isRoleSensitive;
     }
 
-    public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
+    public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext? context, CommandInfo command, IServiceProvider services)
     {
         if (context.User is not IGuildUser user)
             return PreconditionResult.FromError("Este comando só pode ser utilizado em um servidor.");
@@ -62,7 +62,7 @@ public class CommandValidation : PreconditionAttribute
         return PreconditionResult.FromError(errorMessage.ToString());
     }
 
-    private async Task<PreconditionResult> ValidateChannelAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
+    private async Task<PreconditionResult> ValidateChannelAsync(ICommandContext? context, CommandInfo command, IServiceProvider services)
     {
         // busca no DI o serviço de configuração
         if (services.GetService(typeof(IAllowedChannelsConfigService)) is not IAllowedChannelsConfigService allowedConfig)
@@ -86,7 +86,7 @@ public class CommandValidation : PreconditionAttribute
         return authorizedChannels.Any(d => d == channelId) ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Este comando não pode ser utilizado nesta sala. Entre em contato com o dono do servidor para reportar este erro.");
     }
 
-    private async Task<PreconditionResult> ValidateRoleAsync(ICommandContext context, CommandInfo command, IServiceProvider services, IGuildUser user)
+    private async Task<PreconditionResult> ValidateRoleAsync(ICommandContext? context, CommandInfo command, IServiceProvider services, IGuildUser user)
     {
         // busca no DI o serviço de configuração
         if (services.GetService(typeof(IAllowedRolesConfigService)) is not IAllowedRolesConfigService allowedConfig)
@@ -110,7 +110,7 @@ public class CommandValidation : PreconditionAttribute
         return authorizedRoles.Intersect(userRoles).Any() ? PreconditionResult.FromSuccess() : PreconditionResult.FromError(ErrorMessage ?? "Você não tem permissão para executar esse comando. Entre em contato com o dono do servidor para reportar este erro.");
     }
 
-    private async Task<bool> ValidateModeradorAsync(ICommandContext context, IServiceProvider services, IGuildUser user)
+    private async Task<bool> ValidateModeradorAsync(ICommandContext? context, IServiceProvider services, IGuildUser user)
     {
         // busca no DI o serviço de configuração
         if (services.GetService(typeof(IModeradorService)) is not IModeradorService allowedConfig)

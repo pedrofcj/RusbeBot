@@ -78,7 +78,12 @@ public class ZoeiraModule : ModuleBase<SocketCommandContext>
     public async Task AvatarAsync(SocketGuildUser user)
     {
         var url = user.GetAvatarUrl(size: 2048);
+        var userGuildAvatar = user.GetGuildAvatarUrl(size: 2048);
+        
         await ReplyAsync(url);
+        if (!string.IsNullOrEmpty(userGuildAvatar))
+            await ReplyAsync(userGuildAvatar);
+
     }
 
     #endregion

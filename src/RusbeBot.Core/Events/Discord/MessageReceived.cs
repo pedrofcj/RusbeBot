@@ -6,7 +6,7 @@ using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
 using Sentry;
 
-namespace RusbeBot.Core.Events;
+namespace RusbeBot.Core.Events.Discord;
 
 public class MessageReceived
 {

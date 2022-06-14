@@ -8,7 +8,12 @@ namespace RusbeBot.Data.Models;
 public class PrecosModel : BaseModel
 {
     [DynamoDBProperty] public DateTime Data { get; set; }
+    
 
+    [DynamoDBProperty] public int KitReparosP { get; set; }
+    [DynamoDBProperty] public int KitReparosM { get; set; }
+    [DynamoDBProperty] public int KitReparosG { get; set; }
+    
     [DynamoDBProperty] public int MunicaoP { get; set; }
     [DynamoDBProperty] public int MunicaoM { get; set; }
     [DynamoDBProperty] public int MunicaoG { get; set; }
@@ -24,6 +29,10 @@ public class PrecosModel : BaseModel
     [DynamoDBProperty] public int RifleP { get; set; }
     [DynamoDBProperty] public int RifleM { get; set; }
     [DynamoDBProperty] public int RifleG { get; set; }
+    
+    [DynamoDBProperty] public int KitReparosPMarcado { get; set; }
+    [DynamoDBProperty] public int KitReparosMMarcado { get; set; }
+    [DynamoDBProperty] public int KitReparosGMarcado { get; set; }
 
     [DynamoDBProperty] public int MunicaoPMarcado { get; set; }
     [DynamoDBProperty] public int MunicaoMMarcado { get; set; }

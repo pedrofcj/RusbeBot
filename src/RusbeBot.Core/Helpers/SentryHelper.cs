@@ -23,12 +23,12 @@ public static class SentryHelper
         }
 
     }
-    public static void Log(string msg, ICommandContext context, SentryLevel level = SentryLevel.Info, List<KeyValuePair<string, string>>? extraScope = null)
+    public static void Log(string msg, ICommandContext? context, SentryLevel level = SentryLevel.Info, List<KeyValuePair<string, string>>? extraScope = null)
     {
         SentrySdk.CaptureMessage(msg, scope => scope.ConfigureScope(context, extraScope), level);
     }
 
-    private static void ConfigureScope(this Scope scope, ICommandContext context, List<KeyValuePair<string, string>>? extraScope = null)
+    private static void ConfigureScope(this Scope scope, ICommandContext? context, List<KeyValuePair<string, string>>? extraScope = null)
     {
         extraScope ??= new List<KeyValuePair<string, string>>();
         extraScope.AddRange(new List<KeyValuePair<string, string>>

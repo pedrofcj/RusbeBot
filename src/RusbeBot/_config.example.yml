@@ -1,5 +1,7 @@
 ﻿prefix: "!"
 sqlite-file: ""
+isDebug: "yes, it is"
+debugGuildId: ""
 aws:
   accessKeyId: ""
   secretAccessKey: ""

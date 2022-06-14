@@ -2,6 +2,11 @@
 
 public class PrecoRelatorioModel
 {
+    
+    public double KitReparosP { get; set; }
+    public double KitReparosM { get; set; }
+    public double KitReparosG { get; set; }
+    
     public double MunicaoP { get; set; }
     public double MunicaoM { get; set; }
     public double MunicaoG { get; set; }
@@ -18,6 +23,10 @@ public class PrecoRelatorioModel
     public double SMGM { get; set; }
     public double SMGG { get; set; }
 
+    public double KitReparosPMarcado { get; set; }
+    public double KitReparosMMarcado { get; set; }
+    public double KitReparosGMarcado { get; set; }
+    
     public double MunicaoPMarcado { get; set; }
     public double MunicaoMMarcado { get; set; }
     public double MunicaoGMarcado { get; set; }
