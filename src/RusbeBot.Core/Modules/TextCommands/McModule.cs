@@ -251,51 +251,68 @@ public class McModule : ModuleBase<SocketCommandContext>
     #endregion
 
     #region Cargas
+    
+    private const int CargaKitMunPMin = 15;
+    private const int CargaKitMunPMax = 20;
+    
+    private const int CargaKitMunMMin = 25;
+    private const int CargaKitMunMMax = 35;
+    
+    private const int CargaKitMunGMin = 40;
+    private const int CargaKitMunGMax = 55;
 
-    private readonly int _cargaPMin = 15;
-    private readonly int _cargaPMax = 20;
+    private const int CargaArmasPMin = 3;
+    private const int CargaArmasPMax = 5;
 
-    private readonly int _cargaMMin = 25;
-    private readonly int _cargaMMax = 35;
+    private const int CargaArmasMMin = 8;
+    private const int CargaArmasMMax = 12;
 
-    private readonly int _cargaGMin = 40;
-    private readonly int _cargaGMax = 55;
+    private const int CargaArmasGMin = 25;
+    private const int CargaArmasGMax = 30;
 
-    private readonly int _pesoMun = 3;
-    private readonly int _pesoPT = 6;
-    private readonly int _pesoSmg = 25;
-    private readonly int _pesoRifle = 40;
+    private const int PesoKit = 3;
+    private const int PesoMun = 3;
+    private const int PesoPT = 6;
+    private const int PesoSmg = 25;
+    private const int PesoRifle = 40;
 
     [Command("cargas")]
     public async Task CargasAsync()
     {
         var response = new StringBuilder();
+        
+        response.AppendLine("+ Kits: ");
+        response.AppendLine($"- Pequeno: {CargaKitMunPMin}-{CargaKitMunPMax} caixas. Peso: {CargaKitMunPMin * PesoKit}-{CargaKitMunPMax * PesoKit} kgs.");
+        response.AppendLine($"- Médio: {CargaKitMunMMin}-{CargaKitMunMMax} caixas. Peso: {CargaKitMunMMin * PesoKit}-{CargaKitMunMMax * PesoKit} kgs.");
+        response.AppendLine($"- Grande: {CargaKitMunGMin}-{CargaKitMunGMax} caixas. Peso: {CargaKitMunGMin * PesoKit}-{CargaKitMunGMax * PesoKit} kgs.");
+
+        response.AppendLine();
 
         response.AppendLine("+ Munição: ");
-        response.AppendLine($"- Pequeno: {_cargaPMin}-{_cargaPMax} caixas. Peso: {_cargaPMin * _pesoMun}-{_cargaPMax * _pesoMun} kgs.");
-        response.AppendLine($"- Médio: {_cargaMMin}-{_cargaMMax} caixas. Peso: {_cargaMMin * _pesoMun}-{_cargaMMax * _pesoMun} kgs.");
-        response.AppendLine($"- Grande: {_cargaGMin}-{_cargaGMax} caixas. Peso: {_cargaGMin * _pesoMun}-{_cargaGMax * _pesoMun} kgs.");
+        response.AppendLine($"- Pequeno: {CargaKitMunPMin}-{CargaKitMunPMax} caixas. Peso: {CargaKitMunPMin * PesoMun}-{CargaKitMunPMax * PesoMun} kgs.");
+        response.AppendLine($"- Médio: {CargaKitMunMMin}-{CargaKitMunMMax} caixas. Peso: {CargaKitMunMMin * PesoMun}-{CargaKitMunMMax * PesoMun} kgs.");
+        response.AppendLine($"- Grande: {CargaKitMunGMin}-{CargaKitMunGMax} caixas. Peso: {CargaKitMunGMin * PesoMun}-{CargaKitMunGMax * PesoMun} kgs.");
 
         response.AppendLine();
 
         response.AppendLine("+ Pistola: ");
-        response.AppendLine($"- Pequeno: {_cargaPMin}-{_cargaPMax} caixas. Peso: {_cargaPMin * _pesoPT}-{_cargaPMax * _pesoPT} kgs.");
-        response.AppendLine($"- Médio: {_cargaMMin}-{_cargaMMax} caixas. Peso: {_cargaMMin * _pesoPT}-{_cargaMMax * _pesoPT} kgs.");
-        response.AppendLine($"- Grande: {_cargaGMin}-{_cargaGMax} caixas. Peso: {_cargaGMin * _pesoPT}-{_cargaGMax * _pesoPT} kgs.");
+        response.AppendLine($"- Pequeno: {CargaArmasPMin}-{CargaArmasPMax} caixas. Peso: {CargaArmasPMin * PesoPT}-{CargaArmasPMax * PesoPT} kgs.");
+        response.AppendLine($"- Médio: {CargaArmasMMin}-{CargaArmasMMax} caixas. Peso: {CargaArmasMMin * PesoPT}-{CargaArmasMMax * PesoPT} kgs.");
+        response.AppendLine($"- Grande: {CargaArmasGMin}-{CargaArmasGMax} caixas. Peso: {CargaArmasGMin * PesoPT}-{CargaArmasGMax * PesoPT} kgs.");
 
         response.AppendLine();
 
         response.AppendLine("+ SMG: ");
-        response.AppendLine($"- Pequeno: {_cargaPMin}-{_cargaPMax} caixas. Peso: {_cargaPMin * _pesoSmg}-{_cargaPMax * _pesoSmg} kgs.");
-        response.AppendLine($"- Médio: {_cargaMMin}-{_cargaMMax} caixas. Peso: {_cargaMMin * _pesoSmg}-{_cargaMMax * _pesoSmg} kgs.");
-        response.AppendLine($"- Grande: {_cargaGMin}-{_cargaGMax} caixas. Peso: {_cargaGMin * _pesoSmg}-{_cargaGMax * _pesoSmg} kgs.");
+        response.AppendLine($"- Pequeno: {CargaArmasPMin}-{CargaArmasPMax} caixas. Peso: {CargaArmasPMin * PesoSmg}-{CargaArmasPMax * PesoSmg} kgs.");
+        response.AppendLine($"- Médio: {CargaArmasMMin}-{CargaArmasMMax} caixas. Peso: {CargaArmasMMin * PesoSmg}-{CargaArmasMMax * PesoSmg} kgs.");
+        response.AppendLine($"- Grande: {CargaArmasGMin}-{CargaArmasGMax} caixas. Peso: {CargaArmasGMin * PesoSmg}-{CargaArmasGMax * PesoSmg} kgs.");
 
         response.AppendLine();
 
         response.AppendLine("+ Rifle: ");
-        response.AppendLine($"- Pequeno: {_cargaPMin}-{_cargaPMax} caixas. Peso: {_cargaPMin * _pesoRifle}-{_cargaPMax * _pesoRifle} kgs.");
-        response.AppendLine($"- Médio: {_cargaMMin}-{_cargaMMax} caixas. Peso: {_cargaMMin * _pesoRifle}-{_cargaMMax * _pesoRifle} kgs.");
-        response.AppendLine($"- Grande: {_cargaGMin}-{_cargaGMax} caixas. Peso: {_cargaGMin * _pesoRifle}-{_cargaGMax * _pesoRifle} kgs.");
+        response.AppendLine($"- Pequeno: {CargaArmasPMin}-{CargaArmasPMax} caixas. Peso: {CargaArmasPMin * PesoRifle}-{CargaArmasPMax * PesoRifle} kgs.");
+        response.AppendLine($"- Médio: {CargaArmasMMin}-{CargaArmasMMax} caixas. Peso: {CargaArmasMMin * PesoRifle}-{CargaArmasMMax * PesoRifle} kgs.");
+        response.AppendLine($"- Grande: {CargaArmasGMin}-{CargaArmasGMax} caixas. Peso: {CargaArmasGMin * PesoRifle}-{CargaArmasGMax * PesoRifle} kgs.");
 
         while (response.ToString().Contains("(("))
         {
