@@ -33,7 +33,8 @@ public class UtilModule : ModuleBase<SocketCommandContext>
             }
         }
 
-        response.AppendLine($"Próximo IPVA será dia {proximoIpva.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
+        response.AppendLine(
+            $"Próximo IPVA será dia {proximoIpva.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
         await ReplyAsync(response.ToString());
     }
 
@@ -50,7 +51,8 @@ public class UtilModule : ModuleBase<SocketCommandContext>
         };
 
         embedBuilder.AddField("Criado em", user.CreatedAt);
-        embedBuilder.AddField("Entrou em", Context.Guild.Users.FirstOrDefault(guildUser => guildUser.Id == user.Id)?.JoinedAt);
+        embedBuilder.AddField("Entrou em",
+            Context.Guild.Users.FirstOrDefault(guildUser => guildUser.Id == user.Id)?.JoinedAt);
         embedBuilder.AddField("Status", user.Status.ToString());
         embedBuilder.AddField("ID", user.Id);
         embedBuilder.AddField("ID do Avatar", user.AvatarId);

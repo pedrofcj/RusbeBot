@@ -211,6 +211,10 @@ public class McModule : ModuleBase<SocketCommandContext>
     {
         var avg = new PrecoRelatorioModel
         {
+            KitReparosP = precos.Where(d => d.KitReparosP > 0).Average(d => d.KitReparosP),
+            KitReparosM = precos.Where(d => d.KitReparosM > 0).Average(d => d.KitReparosM),
+            KitReparosG = precos.Where(d => d.KitReparosG > 0).Average(d => d.KitReparosG),
+            
             MunicaoP = precos.Where(d => d.MunicaoP > 0).Average(d => d.MunicaoP),
             MunicaoM = precos.Where(d => d.MunicaoM > 0).Average(d => d.MunicaoM),
             MunicaoG = precos.Where(d => d.MunicaoG > 0).Average(d => d.MunicaoG),
@@ -227,6 +231,10 @@ public class McModule : ModuleBase<SocketCommandContext>
             RifleM = precos.Where(d => d.RifleM > 0).Average(d => d.RifleM),
             RifleG = precos.Where(d => d.RifleG > 0).Average(d => d.RifleG),
 
+            KitReparosPMarcado = precos.Where(d => d.KitReparosPMarcado > 0).Average(d => d.KitReparosPMarcado),
+            KitReparosMMarcado = precos.Where(d => d.KitReparosMMarcado > 0).Average(d => d.KitReparosMMarcado),
+            KitReparosGMarcado = precos.Where(d => d.KitReparosGMarcado > 0).Average(d => d.KitReparosGMarcado),
+            
             MunicaoPMarcado = precos.Where(d => d.MunicaoPMarcado > 0).Average(d => d.MunicaoPMarcado),
             MunicaoMMarcado = precos.Where(d => d.MunicaoMMarcado > 0).Average(d => d.MunicaoMMarcado),
             MunicaoGMarcado = precos.Where(d => d.MunicaoGMarcado > 0).Average(d => d.MunicaoGMarcado),
