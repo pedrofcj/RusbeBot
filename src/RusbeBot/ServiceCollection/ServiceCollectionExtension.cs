@@ -2,7 +2,6 @@
 using Discord.Commands;
 using Discord.Interactions;
 using Microsoft.Extensions.DependencyInjection;
-using RusbeBot.Core.Events;
 using RusbeBot.Core.Events.Discord;
 using RusbeBot.Core.Handlers;
 using RusbeBot.Core.Services;

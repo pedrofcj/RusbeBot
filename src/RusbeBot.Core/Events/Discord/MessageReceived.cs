@@ -2,7 +2,6 @@
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using RusbeBot.Core.Extensions;
-using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
 
 namespace RusbeBot.Core.Events.Discord;
@@ -30,11 +29,11 @@ public class MessageReceived
         if (socketMessage is not SocketUserMessage msg) return;
         if (msg.Author.Id == _discord.CurrentUser.Id) return;     // Ignore self when checking commands
 
-        await msg.CheckPrice(_precosService);
+        //await msg.CheckPrice(_precosService);
 
         var context = new SocketCommandContext(_discord, msg);     // Create the command context
 
-        await context.VerificarTaxado();
+        //await context.VerificarTaxado();
 
         var argPos = 0;     // Check if the message has a valid command prefix
         if (msg.HasStringPrefix(_config["prefix"], ref argPos) || msg.HasMentionPrefix(_discord.CurrentUser, ref argPos))

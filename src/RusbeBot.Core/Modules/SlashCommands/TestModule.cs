@@ -1,7 +1,6 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
-using RusbeBot.Core.Components;
 using RusbeBot.Core.Helpers;
 
 namespace RusbeBot.Core.Modules.SlashCommands;

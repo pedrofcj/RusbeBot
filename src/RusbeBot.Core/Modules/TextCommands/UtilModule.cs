@@ -16,7 +16,7 @@ public class UtilModule : ModuleBase<SocketCommandContext>
 
     #region IPVA
 
-    private static readonly DateTime ReferenceDate = new DateTime(2022, 03, 07);
+    private static readonly DateTime ReferenceDate = new(2022, 03, 07);
 
     [Command("ipva")]
     public async Task IpvaAsync()

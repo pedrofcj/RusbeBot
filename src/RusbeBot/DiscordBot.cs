@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
-using RusbeBot.Core.Events;
 using RusbeBot.Core.Events.Discord;
-using RusbeBot.Core.Helpers;
 
 namespace RusbeBot;
 
