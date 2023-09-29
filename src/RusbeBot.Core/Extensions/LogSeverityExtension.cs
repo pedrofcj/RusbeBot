@@ -1,29 +1,29 @@
 ﻿using Discord;
-using Sentry;
+using Microsoft.Extensions.Logging;
 
 namespace RusbeBot.Core.Extensions;
 
 public static class LogSeverityExtension
 {
-    public static SentryLevel ToSentryLevel(this LogSeverity logSeverity)
+    public static LogLevel ToSerilogLevel(this LogSeverity logSeverity)
     {
         switch (logSeverity)
         {
             case LogSeverity.Critical:
-                return SentryLevel.Fatal;
+                return LogLevel.Critical;
 
             case LogSeverity.Error:
-                return SentryLevel.Error;
+                return LogLevel.Error;
 
             case LogSeverity.Warning:
-                return SentryLevel.Warning;
+                return LogLevel.Warning;
 
             case LogSeverity.Info:
-                return SentryLevel.Info;
+                return LogLevel.Information;
 
             case LogSeverity.Verbose:
             case LogSeverity.Debug:
-                return SentryLevel.Debug;
+                return LogLevel.Debug;
 
             default:
                 throw new ArgumentOutOfRangeException(nameof(logSeverity), logSeverity, null);

@@ -2,7 +2,6 @@ using System.Globalization;
 using System.Text;
 using Discord.Commands;
 using RusbeBot.Core.Attributes;
-using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
 using RusbeBot.Data.Models;
 
@@ -30,7 +29,6 @@ public class McModule : ModuleBase<SocketCommandContext>
         if (precos == null)
         {
             const string errorMessage = "Ocorreu um erro ao buscar os preços";
-            SentryHelper.Log($"{errorMessage}{Environment.NewLine}Objeto de preços era null.", Context);
             await ReplyAsync(errorMessage);
             return;
         }

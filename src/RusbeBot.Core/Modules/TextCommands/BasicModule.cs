@@ -23,4 +23,24 @@ public class BasicModule : ModuleBase<SocketCommandContext>
         await Context.Message.DeleteAsync();
         await user.SendMessageAsync(text);
     }
+    
+    [Command("kickFiveM")]
+    public async Task KickFiveM(int userId)
+    {
+        var url = $"http://localhost:30120/sets/players/{userId}";
+        
+        var client = new HttpClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            await ReplyAsync($"Usuário {userId} kickado do FiveM");
+        }
+        else
+        {
+            await ReplyAsync($"Usuário {userId} não encontrado no FiveM");
+        }
+    }
+    
 }

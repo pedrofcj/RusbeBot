@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using RusbeBot.Core.Extensions;
 using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
-using Sentry;
 
 namespace RusbeBot.Core.Events.Discord;
 
@@ -55,16 +54,9 @@ public class MessageReceived
                     new("User Id", context.User?.Id.ToString() ?? string.Empty),
                 };
 
-                SentrySdk.CaptureMessage($"Comando executado: {msg.Content} {Environment.NewLine} Mensagem: '{msg.Content}'",
-                    scope =>
-                    {
-                        scope.SetTags(logTags);
-                    });
                 return;
             }
 
-            //await context.Channel.SendMessageAsync(result.ToString());
-            SentryHelper.Log($"Erro ao tentar executar o comando da mensagem '{msg.Content}'", context, SentryLevel.Error);
         }
     }
 }

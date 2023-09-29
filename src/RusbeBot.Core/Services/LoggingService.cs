@@ -1,9 +1,8 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 using RusbeBot.Core.Extensions;
-using Sentry;
 
 namespace RusbeBot.Core.Services;
 
@@ -11,16 +10,19 @@ public class LoggingService
 {
     private string LogDirectory { get; }
     private string LogFile => Path.Combine(LogDirectory, $"{DateTime.UtcNow:yyyy-MM-dd}.txt");
+    private readonly ILogger<LoggingService> _logger;
 
     // DiscordSocketClient and CommandService are injected automatically from the IServiceProvider
-    public LoggingService(DiscordSocketClient discord, CommandService commands)
+    public LoggingService(DiscordSocketClient discord, CommandService commands, ILogger<LoggingService> logger)
     {
+        _logger = logger;
         LogDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
 
         discord.Log += OnLogAsync;
         commands.Log += OnLogAsync;
 
-        discord.Log += SentryDiscordLogAsync;
+        discord.Log += SerilogDiscordLogAsync;
+        commands.Log += SerilogDiscordLogAsync;
     }
 
     private Task OnLogAsync(LogMessage msg)
@@ -48,24 +50,6 @@ public class LoggingService
 
     #region Sentry
 
-    private static Task SentryDiscordLogAsync(LogMessage msg)
-    {
-        switch (msg.Severity)
-        {
-            case LogSeverity.Critical:
-            case LogSeverity.Error:
-            case LogSeverity.Warning:
-                var logText = FormatMessage(msg);
-                if (!ShouldLog(logText))
-                    break;
-
-                SentrySdk.CaptureMessage($"{FormatMessage(msg)} {Environment.NewLine}Raw: {JsonConvert.SerializeObject(msg)}", msg.Severity.ToSentryLevel());
-                break;
-        }
-
-        return Task.CompletedTask;
-    }
-
     private static bool ShouldLog(string logText)
     {
         if (logText.ToLowerInvariant().Contains("consider removing the intent from your config".ToLowerInvariant()))
@@ -79,6 +63,12 @@ public class LoggingService
 
 
         return true;
+    }
+
+    private Task SerilogDiscordLogAsync(LogMessage msg)
+    {
+        _logger.Log(msg.Severity.ToSerilogLevel(), FormatMessage(msg));
+        return Task.CompletedTask;
     }
 
     #endregion

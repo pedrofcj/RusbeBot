@@ -4,13 +4,13 @@ using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using IMDbApiLib;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RusbeBot.Core.Handlers;
 using RusbeBot.Core.Helpers;
 using RusbeBot.Core.Services;
 using RusbeBot.ServiceCollection;
+using Serilog;
 
 namespace RusbeBot;
 
@@ -26,6 +26,10 @@ internal class Program
         var serviceProvider = serviceDescriptors.BuildServiceProvider();
 
         ConfigureRequiredServices(serviceProvider);
+
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
 
         await serviceProvider.GetRequiredService<InteractionHandler>().InitializeAsync();
         serviceProvider.GetRequiredService<DiscordBot>().RunAsync().GetAwaiter().GetResult();
@@ -65,7 +69,6 @@ internal class Program
     {
         var imdbApiKey = Configuration["tokens:imdbApiKey"];
 
-        SentryHelper.Start(Configuration);
         AwsHelper.Start(Configuration);
         
         serviceCollection.AddSingleton(CreateDiscordSocketClient());
@@ -73,7 +76,7 @@ internal class Program
         serviceCollection.AddDatabaseServices();
         serviceCollection.AddSingleton(Configuration);
         serviceCollection.AddSingleton(new ApiLib(imdbApiKey));
-        serviceCollection.AddMediatR(typeof(Program));
+        serviceCollection.AddLogging(configure => configure.AddSerilog());
     }
 
     private static void ConfigureRequiredServices(IServiceProvider serviceProvider)

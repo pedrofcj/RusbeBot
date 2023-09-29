@@ -1,8 +1,6 @@
 ﻿using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
-using RusbeBot.Core.Helpers;
-using Sentry;
 
 namespace RusbeBot.Core.Events.Discord;
 
@@ -39,7 +37,6 @@ public class Ready
             }
             catch (Exception e)
             {
-                SentrySdk.CaptureException(e);
                 Console.WriteLine(e);
             }
             

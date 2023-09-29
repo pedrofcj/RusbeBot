@@ -1,9 +1,7 @@
 ﻿using System.Text;
 using Discord;
 using Discord.Commands;
-using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
-using Sentry;
 
 namespace RusbeBot.Core.Attributes;
 
@@ -52,12 +50,6 @@ public class CommandValidation : PreconditionAttribute
                            $"Requisitado por {context.User.Username}#{context.User.Discriminator} em {context.Guild.Name}/{context.Channel.Name} ({context.Guild.Id}/{context.Channel.Id}) {Environment.NewLine}" +
                            $"Mensagem de erro: {errorMessage} {Environment.NewLine}" +
                            $"Raw message: {context.Message.Content}";
-
-        SentryHelper.Log(logMessage, context, SentryLevel.Warning, new List<KeyValuePair<string, string>>
-        {
-            new("Tipo", "CommandValidation"),
-            new("Comando", command.Name)
-        });
 
         return PreconditionResult.FromError(errorMessage.ToString());
     }
@@ -115,7 +107,6 @@ public class CommandValidation : PreconditionAttribute
         // busca no DI o serviço de configuração
         if (services.GetService(typeof(IModeradorService)) is not IModeradorService allowedConfig)
         {
-            SentryHelper.Log("Houve um erro ao tentar buscar as configurações para este comando. Entre em contato com o dono do servidor para reportar este erro.", context, SentryLevel.Error);
             return false;
         }
 

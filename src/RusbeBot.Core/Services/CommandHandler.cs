@@ -1,13 +1,9 @@
 ﻿using Discord.Commands;
 using Discord.Interactions;
 using Discord.WebSocket;
-using MediatR;
 using Microsoft.Extensions.Configuration;
-using RusbeBot.Core.Events;
 using RusbeBot.Core.Extensions;
-using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
-using Sentry;
 
 namespace RusbeBot.Core.Services;
 
@@ -18,7 +14,6 @@ public class CommandHandler
     private readonly IConfigurationRoot _config;
     private readonly IServiceProvider _provider;
     private readonly IPrecosService _precosService;
-    private readonly IMediator _mediator;
     private readonly InteractionService _interactionService;
 
     // DiscordSocketClient, CommandService, IConfigurationRoot, and IServiceProvider are injected automatically from the IServiceProvider
@@ -28,7 +23,6 @@ public class CommandHandler
         IConfigurationRoot config,
         IServiceProvider provider,
         IPrecosService precosService, 
-        IMediator mediator, 
         InteractionService interactionService)
     {
         _discord = discord;
@@ -36,7 +30,6 @@ public class CommandHandler
         _config = config;
         _provider = provider;
         _precosService = precosService;
-        _mediator = mediator;
         _interactionService = interactionService;
 
         _discord.MessageReceived += OnMessageReceivedAsync;
@@ -61,35 +54,18 @@ public class CommandHandler
 
     private async Task DiscordOnButtonExecuted(SocketMessageComponent arg)
     {
-        switch (arg.Data.CustomId)
-        {
-            case { } s when s.StartsWith("getActors"):
-                await _mediator.Publish(new GetActorsEvent(arg));
-                break;
-        }
+        
     }
 
     private static Task DiscordOnJoinedGuild(SocketGuild arg)
     {
-        SentrySdk.CaptureMessage($"Entrou no server {arg.Name} ({arg.Id})", scope =>
-        {
-            scope.SetTags(new List<KeyValuePair<string, string>>
-            {
-                new("Tipo", "Entrou")
-            });
-        });
+        
         return Task.CompletedTask;
     }
 
     private static Task DiscordOnLeftGuild(SocketGuild arg)
     {
-        SentrySdk.CaptureMessage($"Saiu no server {arg.Name} ({arg.Id})", scope =>
-        {
-            scope.SetTags(new List<KeyValuePair<string, string>>
-            {
-                new("Tipo", "Saiu")
-            });
-        });
+       
         return Task.CompletedTask;
     }
 
@@ -122,17 +98,11 @@ public class CommandHandler
                     new("User Id", context.User?.Id.ToString() ?? string.Empty),
                 };
 
-                SentrySdk.CaptureMessage($"Comando executado: {msg.Content} {Environment.NewLine}" +
-                                         $"Mensagem: '{msg.Content}'",
-                    scope =>
-                    {
-                        scope.SetTags(logTags);
-                    });
+              
                 return;
             }
 
             //await context.Channel.SendMessageAsync(result.ToString());
-            SentryHelper.Log($"Erro ao tentar executar o comando da mensagem '{msg.Content}'", context, SentryLevel.Error);
         }
     }
 }
