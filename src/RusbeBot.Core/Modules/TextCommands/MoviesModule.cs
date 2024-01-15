@@ -14,7 +14,7 @@ public class MoviesModule : ModuleBase<SocketCommandContext>
         _apiLib = apiLib;
     }
 
-    [Command("movies search")]
+    //[Command("movies search")]
     public async Task MoviesSearchAsync([Remainder] string search)
     {
         var movies = await _apiLib.SearchMovieAsync(search);
@@ -38,7 +38,7 @@ public class MoviesModule : ModuleBase<SocketCommandContext>
         }
     }
 
-    [Command("movies id")]
+    //[Command("movies id")]
     public async Task MoviesIdAsync([Remainder] string search)
     {
         var title = await _apiLib.TitleAsync(search, FullActor: true, FullCast: true);

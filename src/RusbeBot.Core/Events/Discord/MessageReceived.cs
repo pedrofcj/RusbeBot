@@ -2,7 +2,10 @@
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using RusbeBot.Core.Extensions;
+using RusbeBot.Core.Helpers;
 using RusbeBot.Data.Interfaces;
+using Sentry;
+using Serilog;
 
 namespace RusbeBot.Core.Events.Discord;
 
@@ -53,7 +56,11 @@ public class MessageReceived
                     new("User Id", context.User?.Id.ToString() ?? string.Empty),
                 };
 
-                return;
+                SentryHelper.Log($"Comando executado: {msg.Content}", context, SentryLevel.Info, logTags);
+            }
+            else
+            {
+                SentryHelper.Log($"Erro ao executar comando: {msg.Content}", context, SentryLevel.Error);
             }
 
         }

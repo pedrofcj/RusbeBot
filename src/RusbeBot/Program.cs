@@ -10,6 +10,7 @@ using RusbeBot.Core.Handlers;
 using RusbeBot.Core.Helpers;
 using RusbeBot.Core.Services;
 using RusbeBot.ServiceCollection;
+using Sentry;
 using Serilog;
 
 namespace RusbeBot;
@@ -26,6 +27,17 @@ internal class Program
         var serviceProvider = serviceDescriptors.BuildServiceProvider();
 
         ConfigureRequiredServices(serviceProvider);
+
+        SentrySdk.Init(o =>
+        {
+            o.Dsn = Configuration["tokens:sentry"];
+            o.Debug = true;
+            o.Environment = Configuration["environment"];
+            o.AutoSessionTracking = true;
+            o.IsGlobalModeEnabled = true;
+            o.EnableTracing = true;
+            o.StackTraceMode = StackTraceMode.Enhanced;
+        });
 
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
@@ -77,6 +89,7 @@ internal class Program
         serviceCollection.AddSingleton(Configuration);
         serviceCollection.AddSingleton(new ApiLib(imdbApiKey));
         serviceCollection.AddLogging(configure => configure.AddSerilog());
+
     }
 
     private static void ConfigureRequiredServices(IServiceProvider serviceProvider)

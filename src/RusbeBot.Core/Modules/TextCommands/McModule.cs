@@ -18,7 +18,7 @@ public class McModule : ModuleBase<SocketCommandContext>
 
     #region Preços
 
-    [Command("precos")]
+    //[Command("precos")]
     public async Task PrecosAsync()
     {
         var allPrecos = await _precosService.GetAllAsync();

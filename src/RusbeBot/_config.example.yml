@@ -2,6 +2,7 @@
 sqlite-file: ""
 isDebug: "yes, it is"
 debugGuildId: ""
+environment: ""
 aws:
   accessKeyId: ""
   secretAccessKey: ""

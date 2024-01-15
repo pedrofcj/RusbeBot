@@ -14,7 +14,7 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
 
     #region Taxar
 
-    [Command("taxar")]
+    //[Command("taxar")]
     public async Task TaxarAsync(SocketGuildUser user)
     {
 
@@ -23,7 +23,7 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
         await Context.Message.DeleteAsync();
     }
 
-    [Command("liberar")]
+    //[Command("liberar")]
     public async Task LiberarAsync(SocketGuildUser user)
     {
         TaxadosExtension.Remove(Context.Guild.Id, user.Id);
