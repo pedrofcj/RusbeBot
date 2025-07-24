@@ -24,6 +24,7 @@ public class BasicModule : ModuleBase<SocketCommandContext>
         await user.SendMessageAsync(text);
     }
     
+    
     //[Command("kickFiveM")]
     //public async Task KickFiveM(int userId)
     //{

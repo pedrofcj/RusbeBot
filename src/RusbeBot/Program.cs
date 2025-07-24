@@ -35,7 +35,6 @@ internal class Program
             o.Environment = Configuration["environment"];
             o.AutoSessionTracking = true;
             o.IsGlobalModeEnabled = true;
-            o.EnableTracing = true;
             o.StackTraceMode = StackTraceMode.Enhanced;
         });
 

@@ -94,7 +94,12 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
             return;
         }
 
-        var time = GetTimeSpanFromText(tempoText);
+        var time = tempoText.ToTimeSpan();
+
+        if (time is null)
+        {
+            return;
+        }
 
         if (time > TimeSpan.FromDays(28))
         {
@@ -102,24 +107,8 @@ public class ModeratorModule : ModuleBase<SocketCommandContext>
             return;
         }
         
-        await user.SetTimeOutAsync(time);
+        await user.SetTimeOutAsync(time.Value);
         await Context.Message.DeleteAsync();
-    }
-
-    private TimeSpan GetTimeSpanFromText(string text)
-    {
-        // extract just numbers from text
-        var numbers = new string(text.Where(char.IsDigit).ToArray());
-
-        // extract unit from text
-        return text.ToLower().Last() switch
-        {
-            's' => TimeSpan.FromSeconds(int.Parse(numbers)),
-            'm' => TimeSpan.FromMinutes(int.Parse(numbers)),
-            'h' => TimeSpan.FromHours(int.Parse(numbers)),
-            'd' => TimeSpan.FromDays(int.Parse(numbers)),
-            _ => TimeSpan.FromSeconds(int.Parse(numbers))
-        };
     }
 
     #endregion

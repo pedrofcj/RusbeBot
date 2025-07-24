@@ -1,18 +1,19 @@
 ﻿using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
+using RusbeBot.Core.Components;
 using RusbeBot.Core.Helpers;
 
 namespace RusbeBot.Core.Modules.SlashCommands;
 
 public class TestModule : BotInteraction<SocketSlashCommand>
 {
-    // [SlashCommand("sugestao", "Enviar uma sugestão")]
-    // public async Task SugestaoAsync()
-    // {
-    //     await RespondWithModalAsync<SugestaoModal>("sugestao_modal");
-    // }
-    
+    //[SlashCommand("sugestao", "Enviar uma sugestão")]
+    //public async Task SugestaoAsync()
+    //{
+    //    await RespondWithModalAsync<SugestaoModal>("sugestao_modal");
+    //}
+
     [SlashCommand("info", "Busca as informações de um user")]
     public async Task TesteAsync(SocketGuildUser user)
     {
