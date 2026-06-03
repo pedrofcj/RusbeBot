@@ -1,0 +1,12 @@
+﻿prefix: "!"
+sqlite-file: ""
+isDebug: "yes, it is"
+debugGuildId: ""
+environment: ""
+aws:
+  accessKeyId: ""
+  secretAccessKey: ""
+tokens:
+  discord: ""
+  sentry: ""
+  imdbApiKey: ""
